@@ -1,0 +1,1086 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pre-ESRD 案例報告評核</title>
+<style>
+:root{--ink:#243446;--muted:#667685;--line:#dce3e9;--accent:#226c65;--soft:#e8f3f0;--bg:#f4f6f8;--warn:#b0592f;--warn-soft:#fff4ec}
+*{box-sizing:border-box}[hidden]{display:none!important}
+body{margin:0;font-family:system-ui,-apple-system,"Noto Sans TC","Microsoft JhengHei",sans-serif;color:var(--ink);background:var(--bg);font-size:15px;line-height:1.6}
+.top{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:28px;padding:0 max(20px,calc((100vw - 1240px)/2));height:62px}
+.brand{font-weight:750;font-size:16px;white-space:nowrap;line-height:1.25}.brand small{display:block;font-size:11px;color:var(--muted);font-weight:500}
+.tabs{display:flex;height:100%}
+.tab{border:0;border-bottom:3px solid transparent;border-radius:0;background:none;padding:0 16px;height:100%;font-size:15px;color:var(--muted);min-height:0}
+.tab:hover{background:#f5f8f9}.tab[aria-selected=true]{color:var(--accent);border-bottom-color:var(--accent)}
+.count{font-size:12px;background:#edf1f4;border-radius:10px;padding:0 7px;margin-left:4px;color:var(--muted);font-weight:600}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#c8692c;margin-left:5px;vertical-align:middle}
+button{font:inherit;font-size:14px;font-weight:600;border:1px solid #c9d4dc;background:#fff;color:var(--ink);border-radius:8px;padding:9px 15px;cursor:pointer;min-height:40px}
+button:hover{background:#eef3f5}button:disabled{opacity:.45;cursor:default}
+button:focus-visible,a:focus-visible,input:focus-visible+.box{outline:3px solid #84c3bc;outline-offset:2px}
+.primary{background:var(--accent);border-color:var(--accent);color:#fff}.primary:hover{background:#18544f}
+.big{font-size:16px;padding:12px 24px;min-height:50px}.wide{width:100%}
+.linkish{border:0;background:none;color:var(--muted);text-decoration:underline;padding:4px 2px;min-height:0;font-weight:500;font-size:13px}.linkish:hover{background:none;color:var(--ink)}
+.danger{color:#9b3d2e;border-color:#e4bcb2}.danger:hover{background:#fff1ee}
+main{max-width:1240px;margin:auto;padding:26px 20px 70px}
+h1{font-size:25px;margin:0 0 4px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:12px;padding:24px;margin-bottom:20px}
+.panel>h2{font-size:19px;margin:0 0 16px;display:flex;align-items:center;gap:10px}
+.step{font-size:12px;background:var(--soft);color:var(--accent);padding:2px 9px;border-radius:5px}
+label{display:block;font-size:13px;font-weight:650}
+input,textarea{display:block;width:100%;font:inherit;font-size:15px;color:var(--ink);background:#fcfdfe;border:1px solid #ced8e0;border-radius:7px;padding:9px 11px;margin-top:5px}
+input:focus,textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px #226c651f}
+textarea{min-height:84px;resize:vertical;line-height:1.6}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.block{margin-bottom:18px}
+.field-title{font-size:13px;font-weight:650;margin-bottom:7px}
+.note{font-size:13px;color:var(--muted);margin:0}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{min-height:44px}.chip[aria-pressed=true]{background:var(--soft);border-color:var(--accent);color:#175951}.chip[aria-pressed=true]::before{content:'✓ '}
+.choices{display:grid;gap:8px}.inline-choices{display:flex;flex-wrap:wrap;gap:8px}
+.choice{display:flex;align-items:center;gap:10px;padding:11px 14px;border:1px solid var(--line);border-radius:9px;cursor:pointer;font-weight:500;font-size:15px;background:#fff}
+.choice:hover{border-color:#9bbab3}.choice:has(input:checked){background:var(--soft);border-color:var(--accent);font-weight:700}
+.choice input{width:18px;height:18px;margin:0;flex:none;accent-color:var(--accent)}
+details>summary{cursor:pointer;color:var(--accent);font-size:13px;font-weight:600}
+.invalid{border-color:var(--warn)!important;box-shadow:0 0 0 3px #b0592f2e!important}
+div.invalid,article.invalid{border-radius:9px;background:#fffaf6}
+.hint-warn{background:var(--warn-soft);border:1px solid #edcdb8;color:#7a3f22;border-radius:8px;padding:9px 13px;font-size:14px;margin:0 0 16px}
+.item-nav{position:sticky;top:62px;z-index:5;background:#fff;padding:10px 0;display:grid;grid-template-columns:repeat(10,1fr);gap:6px;border-bottom:1px solid var(--line)}
+.item-nav button{padding:4px 0;min-height:34px;font-size:13px}
+.item-nav .done{background:var(--soft);border-color:#8db5a9;color:var(--accent)}
+.item-nav .na{border-style:dashed;background:#f4f1e9;color:#7a7063}
+.item{padding:20px 4px;border-bottom:1px solid var(--line);scroll-margin-top:140px}.item:last-child{border-bottom:0}
+.item-head{display:flex;gap:10px;align-items:baseline;margin-bottom:10px}
+.item-head .no{font-size:12px;background:#edf1f4;padding:1px 6px;border-radius:4px;color:#4e6576}
+.item-head h3{margin:0;font-size:16px}.item-head .w{margin-left:auto;font-size:12px;color:var(--muted);white-space:nowrap}
+.levels{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.level{cursor:pointer;position:relative;font-weight:400}
+.level input{position:absolute;opacity:0;width:1px;height:1px}
+.box{display:block;height:100%;border:1px solid var(--line);border-radius:9px;padding:12px 13px;font-size:13px;color:#4e5d69;line-height:1.55;background:#fff}
+.level:hover .box{border-color:#7ca69e}
+.box b{display:flex;justify-content:space-between;gap:6px;color:var(--ink);font-size:14px}
+.box i{font-style:normal}.box em{font-style:normal;color:var(--accent);font-size:13px;white-space:nowrap}
+.box small{display:block;font-size:11px;color:var(--muted);margin-bottom:5px}
+.level input:checked+.box{background:var(--soft);border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.level input:checked+.box i::before{content:'✓ ';color:var(--accent)}
+.na-row{margin-top:10px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.na-row .box{padding:6px 13px;border-style:dashed}
+.na-row .level input:checked+.box{background:#f3f0e6;border-color:#8c7d58;box-shadow:none;color:#6c5b31;font-weight:700}
+.na-row .reason{flex:1;min-width:220px;margin:0}
+.fb-grid{display:grid;gap:16px}
+.voice{background:#f3f7f6;border:1px solid var(--line);border-radius:9px;padding:13px 15px;margin-bottom:18px}
+.voice .note{margin:8px 0}.voice textarea{min-height:90px}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.errors{background:var(--warn-soft);border:1px solid #e9c3ad;border-radius:9px;padding:12px 16px;margin-bottom:14px;color:#7a3f22;font-size:14px}
+.errors ul{margin:6px 0 0;padding-left:20px}.errors a{color:inherit}
+.draft-note{font-size:12px;color:var(--muted);margin:10px 0 0}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:22px;align-items:start}
+.layout>aside{position:sticky;top:82px}.score-card{border-top:4px solid var(--accent)}
+.score-label{font-size:13px;color:var(--muted);font-weight:600}
+.total{font-size:50px;font-weight:750;line-height:1.1;font-variant-numeric:tabular-nums}.total small{font-size:15px;color:var(--muted);font-weight:500}
+.bar{height:6px;background:#edf1f4;border-radius:4px;overflow:hidden;margin:12px 0 8px}.bar div{height:100%;background:var(--accent);width:0;transition:width .2s}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:12px 0 16px;font-size:12px;color:var(--muted)}
+.stats div{background:#f6f8fa;border-radius:6px;padding:6px 9px}.stats b{display:block;font-size:16px;color:var(--ink);font-variant-numeric:tabular-nums}
+.banner{background:#eef4fb;border:1px solid #bcd0e6;border-radius:10px;padding:12px 16px;margin-bottom:18px;display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.mobile-bar{display:none}
+dialog{border:1px solid var(--line);border-radius:14px;padding:26px;max-width:min(520px,94vw);color:var(--ink)}
+dialog::backdrop{background:#13233170}
+dialog h2{margin:0 0 8px;font-size:20px}
+.dialog-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+#doneDialog{text-align:center;width:460px}#doneDialog .dialog-actions{justify-content:center}
+.done-check{width:54px;height:54px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font-size:28px;margin:0 auto 12px}
+.done-who{font-weight:700;margin:0}.done-score{font-size:40px;font-weight:750;color:var(--accent);line-height:1.2;margin:6px 0}.done-score small{font-size:15px;color:var(--muted)}
+#doneDialog .primary.big{width:100%}
+#toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:#243446;color:#fff;border-radius:8px;padding:10px 20px;font-size:14px;z-index:50;max-width:92vw;display:none}
+.toolbar{display:flex;gap:16px;align-items:end;justify-content:space-between;flex-wrap:wrap;margin-bottom:18px}
+.toolbar label{width:280px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:16px}
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px}
+.card-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.card-head h3{margin:0;font-size:19px}.card-head strong{font-size:24px;color:var(--accent)}.card-head small{font-size:13px;color:var(--muted)}
+.card svg{width:100%;display:block;margin:4px 0}
+svg text{font:13px system-ui,sans-serif;fill:#617785}svg text.pt{fill:#216e64;font-weight:700}
+.stage-dates{display:grid;grid-template-columns:repeat(3,1fr);text-align:center;font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.4}
+.empty{background:#fff;border:1px dashed #c3cfd8;border-radius:12px;padding:44px 20px;text-align:center;color:var(--muted)}
+#detailDialog{width:880px;max-width:95vw;max-height:90vh}
+.dlg-head{display:flex;justify-content:space-between;align-items:center;gap:12px;position:sticky;top:-26px;background:#fff;padding:4px 0 10px;margin-top:-4px}
+.hist{border-top:1px solid var(--line);padding:16px 0}
+.hist h3{margin:0 0 2px;font-size:16px}
+.lv-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px 18px;font-size:13px;margin:10px 0}
+.fb h4{margin:10px 0 1px;font-size:13px;color:var(--accent)}.fb p{margin:0;white-space:pre-wrap;font-size:14px;overflow-wrap:anywhere}
+.tag-warn{background:var(--warn-soft);color:#8a4a24;border-radius:4px;padding:1px 6px;font-size:13px}
+.data-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}
+.stat{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px;font-size:13px;color:var(--muted)}
+.stat b{display:block;font-size:24px;color:var(--ink)}.stat b.small{font-size:16px;padding-top:6px}
+.actions-big{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:0 0 18px}
+.action{border:1px solid var(--line);border-radius:12px;padding:20px;background:#fff}
+.action h3{margin:0 0 4px;font-size:17px}.action p{margin:0 0 14px;font-size:13px;color:var(--muted)}
+.conflict{border:1px solid var(--line);border-radius:9px;padding:12px 14px;margin:10px 0}
+.conflict .inline-choices{margin-top:8px}.conflict .choice{font-size:14px;padding:8px 12px}
+.danger-zone{margin-top:30px}.danger-zone p{margin:8px 0}
+@media(max-width:900px){
+ .layout{display:block}.layout>aside{display:none}
+ body[data-view=assess] .mobile-bar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:15;background:#fff;border-top:1px solid var(--line);padding:10px 14px calc(10px + env(safe-area-inset-bottom));align-items:center;justify-content:space-between;gap:12px;box-shadow:0 -4px 16px #24344614}
+ .mobile-bar b{font-size:14px}.mobile-bar .note{font-size:12px}
+ body[data-view=assess] main{padding-bottom:110px}body[data-view=assess] #toast{bottom:92px}
+ .levels{grid-template-columns:1fr}
+ .top{gap:8px;padding:0 10px}.brand small{display:none}.brand{font-size:14px}.tab{padding:0 9px;font-size:14px}
+ .actions-big{grid-template-columns:1fr}
+}
+@media(max-width:560px){
+ .brand{display:none}.tabs{width:100%;justify-content:space-around}
+ .grid2{grid-template-columns:1fr}.panel{padding:18px}.item-nav{gap:4px}.item-nav button{font-size:12px;padding:0}
+ .data-stats{grid-template-columns:1fr 1fr}.lv-grid{grid-template-columns:1fr}.toolbar label{width:100%}
+ .cards{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body data-view="assess">
+<header class="top">
+ <div class="brand">Pre-ESRD 案例報告評核<small>臨床藥學教學 · PPCP × SNAPPS</small></div>
+ <nav class="tabs" role="tablist">
+  <button class="tab" role="tab" data-view="assess" aria-selected="true">開始評核</button>
+  <button class="tab" role="tab" data-view="records" aria-selected="false">學生紀錄<span class="count" id="recCount">0</span></button>
+  <button class="tab" role="tab" data-view="data" aria-selected="false">資料管理<span class="dot" id="unsyncDot" title="有紀錄尚未下載到 Excel" hidden></span></button>
+ </nav>
+</header>
+
+<main>
+<!-- ============ 開始評核 ============ -->
+<section id="view-assess">
+ <div id="editBanner" class="banner" hidden>
+  <div><b id="editTitle"></b><p class="note">修改後按「完成修改」，會更新這筆紀錄，不會新增。</p></div>
+  <button id="leaveEdit" type="button">改評下一位學生</button>
+ </div>
+ <div class="layout">
+  <div>
+   <section class="panel">
+    <h2><span class="step">1</span>基本資料</h2>
+    <div class="block" id="f-teachers">
+     <div class="field-title">評核老師（可複選）</div>
+     <div class="chips" id="teacherChips"></div>
+     <label style="margin-top:10px">其他老師<input id="teacherOther" placeholder="以頓號分隔，例如：王小明、陳小華"></label>
+    </div>
+    <div class="grid2 block">
+     <label>學生姓名<input id="f-student" data-f="student" list="studentList" autocomplete="off" placeholder="輸入姓名"></label>
+     <label>評核日期<input id="f-date" data-f="date" type="date"></label>
+    </div>
+    <datalist id="studentList"></datalist>
+    <div class="block" id="f-stage">
+     <div class="field-title">評核階段</div>
+     <div class="choices">
+      <label class="choice"><input type="radio" name="stage" value="1">第一次｜初階臨床（PRE ESRD）</label>
+      <label class="choice"><input type="radio" name="stage" value="2">第二次｜進階臨床-1（AKI 或 ICU 查房）</label>
+      <label class="choice"><input type="radio" name="stage" value="3">第三次｜進階臨床-2（AKI 或 ICU 查房）</label>
+     </div>
+    </div>
+    <div class="block" id="f-caseType" hidden>
+     <div class="field-title">案例類型</div>
+     <div class="inline-choices">
+      <label class="choice"><input type="radio" name="caseType" value="AKI">AKI</label>
+      <label class="choice"><input type="radio" name="caseType" value="ICU查房">ICU 查房</label>
+     </div>
+    </div>
+    <p id="dupHint" class="hint-warn" hidden></p>
+    <details>
+     <summary>選填：案例代碼、報告時間</summary>
+     <div class="grid2" style="margin-top:12px">
+      <label>案例代碼<input data-f="caseId" placeholder="去識別化代碼"></label>
+      <label>報告時間（分鐘）<input data-f="duration" type="number" min="0" max="999" placeholder="例如 20"></label>
+     </div>
+    </details>
+   </section>
+
+   <section class="panel">
+    <h2><span class="step">2</span>案例報告評分<span class="note" id="progressText" style="margin-left:auto"></span></h2>
+    <p class="note" style="margin-bottom:6px">點選最符合學生表現的卡片。資料不足以評時，選「本次不適用」並寫原因。</p>
+    <nav class="item-nav" id="itemNav" aria-label="跳至評分項目"></nav>
+    <div id="rubric"></div>
+   </section>
+
+   <section class="panel">
+    <h2><span class="step">3</span>教師回饋</h2>
+    <details class="voice">
+     <summary>用語音輸入回饋（選用）</summary>
+     <p class="note">依序說「優點是…、改善是…、下一步是…」，再按「整理到下方欄位」。語音可能由瀏覽器服務處理，請勿口述病人或學生個資。</p>
+     <div class="row"><button type="button" id="voiceStart">開始語音輸入</button><button type="button" id="voiceStop" disabled>停止</button><span id="voiceStatus" class="note" role="status"></span></div>
+     <label style="margin-top:10px">逐字稿（可修改）<textarea data-f="voice" placeholder="優點：…&#10;改善：…&#10;下一步：…"></textarea></label>
+     <button type="button" id="voiceOrganize" style="margin-top:8px">整理到下方欄位</button>
+    </details>
+    <div class="fb-grid">
+     <label>表現優點<textarea data-f="strength" placeholder="具體行為與支持證據"></textarea></label>
+     <label>優先改善事項<textarea data-f="improve" placeholder="最需要改善的一至兩項行為"></textarea></label>
+     <label>學生下一步<textarea data-f="next" placeholder="做什麼、何時完成、如何追蹤"></textarea></label>
+     <label>教師追問與提示<textarea data-f="prompt" placeholder="一般澄清不算提示；指出遺漏或引導答案時，記錄原句"></textarea></label>
+     <div id="f-safety">
+      <div class="field-title">病人安全問題</div>
+      <div class="inline-choices">
+       <label class="choice"><input type="radio" name="safety" data-f="safety" value="無">無</label>
+       <label class="choice"><input type="radio" name="safety" data-f="safety" value="有">有，需優先修正</label>
+      </div>
+     </div>
+     <label id="safetyNoteWrap" hidden>安全事件與修正安排<textarea id="f-safetyNote" data-f="safetyNote" placeholder="具體事實與修正安排"></textarea></label>
+    </div>
+   </section>
+
+   <section class="panel" id="finishPanel">
+    <div id="errors" class="errors" role="alert" hidden></div>
+    <div class="row">
+     <button id="finishBtn" type="button" class="primary big">完成本次評核</button>
+     <button id="clearBtn" type="button" class="linkish">清空重填</button>
+    </div>
+    <p class="draft-note" id="draftNote">填寫中的內容會自動保留在此瀏覽器。</p>
+   </section>
+  </div>
+
+  <aside>
+   <section class="panel score-card">
+    <div class="score-label">目前總分</div>
+    <div class="total"><span id="total">—</span><small> ／100</small></div>
+    <div class="bar"><div id="bar"></div></div>
+    <p class="note" id="totalHint">還有 10 項未評</p>
+    <div class="stats">
+     <div>累積得分<b id="earned">0</b></div>
+     <div>適用滿分<b id="possible">100</b></div>
+     <div>不適用<b id="naCount">0 項</b></div>
+     <div>尚未評分<b id="pendingCount">10 項</b></div>
+    </div>
+    <button id="finishBtn2" type="button" class="primary wide">完成本次評核</button>
+   </section>
+  </aside>
+ </div>
+ <div class="mobile-bar">
+  <div><b id="mProgress">已評 0／10</b><p class="note" id="mScore">完成後換算總分</p></div>
+  <button id="finishBtn3" type="button" class="primary">完成本次評核</button>
+ </div>
+</section>
+
+<!-- ============ 學生紀錄 ============ -->
+<section id="view-records" hidden>
+ <div class="toolbar">
+  <div><h1>學生紀錄</h1><p class="note" id="recSummary"></p></div>
+  <label>搜尋學生<input id="recSearch" placeholder="輸入姓名"></label>
+ </div>
+ <div id="recCards" class="cards"></div>
+</section>
+
+<!-- ============ 資料管理 ============ -->
+<section id="view-data" hidden>
+ <h1>資料管理</h1>
+ <p class="note">完成評核會保存在<b>此瀏覽器</b>；連線 Google 雲端母檔後，也會自動加入雲端。下載 Excel 是額外的離線備份。</p>
+ <div class="data-stats">
+  <div class="stat">學生<b id="dStudents">0</b></div>
+  <div class="stat">評核紀錄<b id="dRecords">0</b></div>
+  <div class="stat">上次下載 Excel<b id="dLast" class="small">尚未下載</b></div>
+ </div>
+ <p id="dUnsync" class="hint-warn" hidden></p>
+ <section class="panel" id="gsPanel">
+  <h2 style="font-size:17px;margin:0 0 4px">Google 雲端母檔<span id="gsBadge" class="count" style="margin-left:6px">未連線</span></h2>
+  <p class="note" id="gsStatus"></p>
+  <div class="row" style="margin-top:12px" id="gsSetup">
+   <input id="gsUrl" placeholder="貼上網頁應用程式網址：https://script.google.com/macros/s/…/exec" style="flex:1;min-width:260px;margin:0" autocomplete="off">
+   <button id="gsSave" class="primary" type="button">連線</button>
+  </div>
+  <div class="row" style="margin-top:12px" id="gsActions" hidden>
+   <button id="gsPull" type="button">從 Google 母檔載入其他老師的紀錄</button>
+   <button id="gsRetry" type="button" hidden>重新上傳未同步的紀錄</button>
+   <button id="gsDisconnect" type="button" class="linkish">取消連線</button>
+  </div>
+  <details style="margin-top:14px" id="gsHelp">
+   <summary>第一次設定步驟（約 3 分鐘，只需做一次）</summary>
+   <ol class="note" style="line-height:1.9;margin:10px 0">
+    <li>開啟 Google 雲端硬碟中的「Pre-ESRD 案例報告評核母檔」。</li>
+    <li>上方選單：<b>擴充功能 → Apps Script</b>。</li>
+    <li>刪除編輯器裡原有的內容，貼上下方程式碼，按儲存（磁碟圖示）。</li>
+    <li>右上角 <b>部署 → 新增部署作業</b> → 齒輪選「<b>網頁應用程式</b>」。執行身分：<b>我</b>；誰可以存取：<b>所有人</b> → 部署。</li>
+    <li>依畫面授權。若出現「Google 尚未驗證這個應用程式」，按「進階」→「前往（不安全）」，這是你自己的程式，屬正常提示。</li>
+    <li>複製「網頁應用程式」網址（結尾是 /exec），貼到上方欄位，按「連線」。</li>
+   </ol>
+   <textarea id="gsCode" readonly style="font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;min-height:200px;white-space:pre"></textarea>
+   <button id="gsCopy" type="button" style="margin-top:8px">複製程式碼</button>
+   <p class="note" style="margin-top:8px">網址等同於母檔的寫入鑰匙，請只在教學團隊內分享。</p>
+  </details>
+ </section>
+ <div class="actions-big">
+  <div class="action">
+   <h3>下載最新 Excel 總檔</h3>
+   <p>一次下載此瀏覽器的全部評核，含「學生趨勢總覽」。每次下載都是完整檔案，保留最新一份即可。</p>
+   <button id="exportBtn" type="button" class="primary big">下載 Excel 總檔</button>
+  </div>
+  <div class="action">
+   <h3>匯入既有 Excel</h3>
+   <p>把之前下載的總檔或其他老師的檔案加入此瀏覽器。已有的紀錄會自動略過，不會重複。</p>
+   <button id="importBtn" type="button" class="big">選擇 Excel 檔</button>
+   <input id="importFile" type="file" accept=".xlsx" hidden>
+  </div>
+ </div>
+ <div id="importResult"></div>
+ <details class="danger-zone">
+  <summary>清除此瀏覽器的所有紀錄</summary>
+  <p class="note">只清除此瀏覽器中的資料，不影響已下載的 Excel。清除前請先下載 Excel 總檔。</p>
+  <button id="wipeBtn" type="button" class="danger">清除全部紀錄</button>
+ </details>
+</section>
+</main>
+
+<dialog id="doneDialog">
+ <div class="done-check" aria-hidden="true">✓</div>
+ <h2 id="doneTitle"></h2>
+ <p id="doneWho" class="done-who"></p>
+ <div class="done-score"><span id="doneScore"></span><small> ／100</small></div>
+ <p id="doneText" class="note"></p>
+ <p id="doneSync" class="note" style="font-weight:600" hidden></p>
+ <div class="dialog-actions">
+  <button id="doneNext" type="button" class="primary big">評下一位學生</button>
+  <button id="donePdf" type="button">下載學生 PDF</button>
+  <button id="doneEdit" type="button">返回修改</button>
+  <button id="doneRecords" type="button">查看學生紀錄</button>
+ </div>
+</dialog>
+<dialog id="askDialog"><h2 id="askTitle"></h2><p id="askText"></p><div class="dialog-actions" id="askButtons"></div></dialog>
+<dialog id="detailDialog"><div class="dlg-head"><h2 id="detailTitle"></h2><button id="detailClose" type="button">關閉</button></div><div id="detailBody"></div></dialog>
+<div id="toast" role="status"></div>
+
+<script>
+'use strict';
+/* ---------- 設定 ---------- */
+const RUBRIC=[{"id":1,"title":"病人背景與主觀資料","weight":10,"standards":["呈現就診原因、CKD病史與共病、症狀時間軸、過敏、遵從性及病人需求；未知項目標示待確認。","主要背景正確；經提示可補症狀時間軸、遵從性或需求。","重要病史／症狀遺漏或錯誤；將未詢問事項視為正常。"]},{"id":2,"title":"完整用藥與來源核對","weight":10,"standards":["逐項報告本院、他院及非處方用藥的藥名、劑量、頻次、適應症與來源；區分處方紀錄與實際服用。","主要藥物完整；經提示可補劑量、來源或實際服用狀態。","遺漏影響決策的藥物／劑量；把雲端處方當成確定服用。"]},{"id":3,"title":"客觀數據與變化趨勢","weight":10,"standards":["呈現必要檢驗及生命徵象的數值、單位、日期與趨勢；說明腎功能估算方法與用途，標出缺少資料。","主要數值正確；部分日期、單位、趨勢或估算說明需提示。","重要數據錯誤或遺漏；混用不同時點、將舊數據當成現況。"]},{"id":4,"title":"問題辨識與優先排序","weight":10,"standards":["提出2–3項優先問題及支持證據；依當下風險、證據與可行行動排序，區分確定DTP、潛在風險及待評估需求。","能辨識主要問題；排序理由或問題界定經追問後才清楚。","只羅列數據；漏掉主要用藥問題，或排序無理由。"]},{"id":5,"title":"病人特異性臨床推理","weight":15,"standards":["針對慢性腎臟病及多重共病進行整合評估，連結症狀、用藥、腎功能與時間序列；比較處置選項，說明支持／反對證據與仍需資料。","有針對慢性腎臟病患者特性進行評估；多重共病的整合或處置選項比較需提示才能完成。","只有結論；把相關性當因果，或判斷與個案證據不符。"]},{"id":6,"title":"證據運用與適用性","weight":10,"standards":["指出可追溯來源與關鍵建議；檢查腎功能指標、病人條件及證據限制，說明為何適用此個案。","來源及主要建議合理；適用條件或限制經追問才補足。","無可追溯依據、誤讀建議，或直接套用不適合此病人的證據。"]},{"id":7,"title":"照護計畫與追蹤","weight":15,"standards":["提出具體且必要時有條件的建議；交代執行對象、處置狀態、追蹤指標、時點及異常時下一步。","計畫方向合理；執行安排、時點或追蹤處置需提示補足。","計畫不可執行／有明顯安全問題；無追蹤，或把建議寫成已完成。"]},{"id":8,"title":"主動提問與回應追問","weight":10,"standards":["主動提出影響決策的具體不確定性及初步想法；回應追問時用證據說明，能修正原判斷。","能表達疑問與回應；需要提示才形成具體問題或修正理由。","僅問「怎麼處理」且無初步思考；忽略不確定性或無法回應。"]},{"id":9,"title":"延伸學習與回到照護","weight":5,"standards":["選定個案相關、可搜尋且能影響決策的學習題目；提出查找方向、回報時點及應用方式。","題目與個案相關；查找、回報或應用安排需提示。","未提出題目，或題目與此個案決策無關。"]},{"id":10,"title":"報告結構與專業表達","weight":5,"standards":["先完整呈現PPCP必要資料，再依SNAPPS聚焦；表達清楚、時限內完成，保護個資並區分事實／推論／建議。","結構可理解；偶有重複、跳接或超時，提示後能調整。","順序混亂影響理解；未完整呈現資料即下結論，或混淆事實與推論。"]}];
+const TEACHERS=['林子鈺','劉賢德','李承翰','鄭湜玄','黃致云'];
+const STAGE_SHORT={1:'第一次｜初階臨床',2:'第二次｜進階臨床-1',3:'第三次｜進階臨床-2'};
+const STAGE_EXCEL={1:'第一次｜初階臨床（PRE ESRD）',2:'第二次｜進階臨床-1（AKI或ICU查房）',3:'第三次｜進階臨床-2（AKI或ICU查房）'};
+const RUBRIC_VERSION='PPCP-SNAPPS-10-v1';
+const LEVEL_TITLE={2:'完整整合',1:'部分完成',0:'尚待加強'};
+const LEVEL_SUB={2:'2 級・獨立完成',1:'1 級・需提示補足',0:'0 級・未達要求'};
+// [欄位, 畫面標題, Excel 欄名]
+const FEEDBACK=[['strength','表現優點','優點'],['improve','優先改善事項','改善'],['next','學生下一步','下一步'],['prompt','教師追問與提示','教師提問'],['safety','病人安全與優先修正','病人安全'],['safetyNote','安全事件與修正安排','修正安排']];
+const DEFAULT_GS_URL='';
+/* 專屬連結：網址#gs=<Apps Script 網址>，點一次就記在此瀏覽器，並從網址列移除 */
+const LINK_GS_URL=(()=>{try{const m=location.hash.match(/(?:^#|&)gs=([^&]+)/);if(!m)return '';const u=decodeURIComponent(m[1]);history.replaceState(null,'',location.pathname+location.search);return /^https:\/\/script\.google\.com\/macros\/s\/[\w-]+\/exec$/.test(u)?u:'';}catch{return '';}})();
+const KEY={records:'pre-esrd-records-v2',draft:'pre-esrd-draft-v2',meta:'pre-esrd-meta-v2',old:'pre-esrd-rubric-v1'};
+
+/* ---------- 工具 ---------- */
+const $=id=>document.getElementById(id);
+const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const pad=n=>String(n).padStart(2,'0');
+const today=()=>{const d=new Date();return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;};
+const uid=()=>(window.crypto&&crypto.randomUUID)?crypto.randomUUID():'r'+Date.now().toString(36)+Math.random().toString(36).slice(2,10);
+const splitNames=s=>[...new Set(String(s??'').split(/[、，,；;／/]+/).map(x=>x.trim()).filter(Boolean))];
+const fmt=t=>t===null||t===undefined?'—':t.toFixed(1);
+function parseStage(v){const n=Number(v);if([1,2,3].includes(n)&&String(v).trim()!=='')return n;const s=String(v??'').trim();if(s.startsWith('第一次'))return 1;if(s.startsWith('第二次'))return 2;if(s.startsWith('第三次'))return 3;return null;}
+function calc(scores){let earned=0,possible=0,na=0,pending=0;for(const i of RUBRIC){const s=scores[i.id];if(s==='na'){na++;continue;}possible+=i.weight;if([0,1,2].includes(s))earned+=i.weight*s/2;else pending++;}return {earned,possible,na,pending,total:pending===0&&possible>0?Math.round(earned/possible*1000)/10:null};}
+function normDate(v){if(typeof v==='number'&&isFinite(v))return new Date(Date.UTC(1899,11,30)+Math.round(v)*86400000).toISOString().slice(0,10);const m=String(v??'').trim().match(/^(\d{4})[-/.](\d{1,2})[-/.](\d{1,2})/);return m?`${m[1]}-${pad(m[2])}-${pad(m[3])}`:'';}
+function toast(t){const el=$('toast');el.textContent=t;el.style.display='block';clearTimeout(toast.t);toast.t=setTimeout(()=>el.style.display='none',3500);}
+function ask(title,text,buttons){return new Promise(resolve=>{const d=$('askDialog');$('askTitle').textContent=title;$('askText').textContent=text;$('askButtons').replaceChildren(...buttons.map(b=>{const el=document.createElement('button');el.type='button';el.textContent=b.label;if(b.cls)el.className=b.cls;el.onclick=()=>{d.close();resolve(b.value);};return el;}));d.oncancel=()=>resolve(null);d.showModal();});}
+function loadJSON(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d;}catch{return d;}}
+function saveJSON(k,v){const s=JSON.stringify(v);localStorage.setItem(k,s);if(localStorage.getItem(k)!==s)throw Error('verify');}
+
+/* ---------- 資料 ---------- */
+function cleanRecord(r){
+ if(!r||typeof r!=='object'||!r.id||!String(r.student??'').trim())return null;
+ const scores={},reasons={};
+ for(const i of RUBRIC){const s=r.scores?.[i.id];if([0,1,2,'na'].includes(s))scores[i.id]=s;reasons[i.id]=s==='na'?String(r.reasons?.[i.id]??''):'';}
+ const out={id:String(r.id),createdAt:String(r.createdAt||r.updatedAt||''),updatedAt:String(r.updatedAt||''),date:normDate(r.date)||String(r.date||''),student:String(r.student).trim(),teachers:Array.isArray(r.teachers)?r.teachers.map(String):splitNames(r.teachers),stage:parseStage(r.stage),caseType:String(r.caseType||''),caseId:String(r.caseId??''),duration:String(r.duration??''),scores,reasons,rubricVersion:String(r.rubricVersion||RUBRIC_VERSION)};
+ if(out.stage===1)out.caseType='PRE ESRD';
+ for(const [k] of FEEDBACK)out[k]=String(r[k]??'');
+ return out;
+}
+const comparable=r=>JSON.stringify([r.date,r.student,r.teachers.join('、'),r.stage,r.stage===1?'PRE ESRD':r.caseType,r.caseId.trim(),String(r.duration).trim(),RUBRIC.map(i=>r.scores[i.id]??null),RUBRIC.map(i=>r.scores[i.id]==='na'?String(r.reasons[i.id]||'').trim():''),...FEEDBACK.map(([k])=>String(r[k]||'').trim())]);
+const byDate=(a,b)=>(a.date+a.updatedAt).localeCompare(b.date+b.updatedAt);
+
+let records=loadJSON(KEY.records,[]);records=(Array.isArray(records)?records:[]).map(cleanRecord).filter(Boolean);
+let meta=Object.assign({lastExportAt:'',synced:{},deletedSinceExport:0,migrated:false},loadJSON(KEY.meta,{}));
+if(!meta.synced||typeof meta.synced!=='object')meta.synced={};
+
+function blankFields(){return {date:today(),teachers:[],student:'',stage:null,caseType:'',caseId:'',duration:'',strength:'',improve:'',next:'',prompt:'',safety:'',safetyNote:'',voice:''};}
+function blankDraft(teachers=[],date=today()){const f=blankFields();f.teachers=[...teachers];f.date=date;return {editingId:null,fields:f,scores:{},reasons:{}};}
+function cleanDraft(d){
+ if(!d||typeof d!=='object')return blankDraft();
+ const f=blankFields();
+ for(const k in f){const v=d.fields?.[k];if(k==='teachers')f[k]=Array.isArray(v)?v.map(String):splitNames(v);else if(k==='stage')f[k]=parseStage(v);else if(v!==undefined&&v!==null)f[k]=String(v);}
+ const scores={},reasons={};for(const i of RUBRIC){const s=d.scores?.[i.id];if([0,1,2,'na'].includes(s))scores[i.id]=s;if(typeof d.reasons?.[i.id]==='string')reasons[i.id]=d.reasons[i.id];}
+ return {editingId:typeof d.editingId==='string'?d.editingId:null,fields:f,scores,reasons};
+}
+let draft=cleanDraft(loadJSON(KEY.draft,null));
+
+function persist(){saveJSON(KEY.records,records);saveJSON(KEY.meta,meta);}
+function saveMeta(){try{saveJSON(KEY.meta,meta);}catch{}}
+let draftTimer;
+function saveDraft(){clearTimeout(draftTimer);draftTimer=setTimeout(saveDraftNow,250);}
+function saveDraftNow(){clearTimeout(draftTimer);try{saveJSON(KEY.draft,draft);$('draftNote').textContent='填寫中的內容會自動保留在此瀏覽器。';}catch{$('draftNote').textContent='⚠ 此瀏覽器無法自動保留填寫內容，請盡快完成評核。';}}
+const unsyncedCount=()=>records.filter(r=>meta.synced[r.id]!==r.updatedAt).length+(meta.deletedSinceExport||0);
+
+/* 舊版（v1）資料轉移：舊版只保存一筆「已儲存評核」與草稿 */
+function fromOldRow(row,id,savedAt){
+ const scores={},reasons={};
+ RUBRIC.forEach((i,n)=>{const v=row[8+n];if(v==='不適用')scores[i.id]='na';else if([0,1,2].includes(v))scores[i.id]=v;reasons[i.id]=String(row[18+n]??'');});
+ const r={id:id||uid(),date:row[0],student:row[1],teachers:splitNames(row[2]),caseId:row[3],duration:row[4],scores,reasons,stage:parseStage(row[36])||parseStage(row[35]),caseType:row[37]==='待確認'?'':row[37],rubricVersion:row[38]==='待確認'?RUBRIC_VERSION:row[38],updatedAt:savedAt||'',createdAt:savedAt||''};
+ FEEDBACK.forEach(([k],n)=>r[k]=row[28+n]);
+ return cleanRecord(r);
+}
+function migrateOld(){
+ if(meta.migrated)return;
+ try{
+  const old=JSON.parse(localStorage.getItem(KEY.old)||'null');
+  if(old){
+   const snap=old.assessmentSnapshot;
+   if(snap&&Array.isArray(snap.row)){const r=fromOldRow(snap.row,snap.id,snap.savedAt);if(r&&!records.some(x=>x.id===r.id))records.push(r);}
+   if(!localStorage.getItem(KEY.draft)&&old.fields){
+    const f=old.fields;
+    draft=cleanDraft({fields:{...f,teachers:splitNames(f.teacher)},scores:old.scores,reasons:old.reasons});
+    if(snap&&snap.id&&records.some(x=>x.id===snap.id))draft.editingId=snap.id;
+    saveDraftNow();
+   }
+  }
+ }catch{}
+ meta.migrated=true;
+ try{persist();}catch{}
+}
+
+/* ---------- 評核畫面 ---------- */
+function renderRubric(){
+ $('rubric').innerHTML=RUBRIC.map(i=>`<article class="item" id="item-${i.id}">
+  <div class="item-head"><span class="no">${pad(i.id)}</span><h3>${esc(i.title)}</h3><span class="w">滿分 ${i.weight}</span></div>
+  <div class="levels">${[2,1,0].map((v,j)=>`<label class="level"><input type="radio" name="score-${i.id}" value="${v}"><span class="box"><b><i>${LEVEL_TITLE[v]}</i><em>${i.weight*v/2} 分</em></b><small>${LEVEL_SUB[v]}</small>${esc(i.standards[j])}</span></label>`).join('')}</div>
+  <div class="na-row"><label class="level"><input type="radio" name="score-${i.id}" value="na"><span class="box">本次不適用</span></label><input class="reason" id="reason-${i.id}" data-reason="${i.id}" placeholder="不適用原因（必填）" hidden><button type="button" class="linkish" data-clear="${i.id}" hidden>取消選擇</button></div>
+ </article>`).join('');
+}
+function renderTeachers(){
+ const sel=draft.fields.teachers;
+ $('teacherChips').innerHTML=TEACHERS.map(n=>`<button type="button" class="chip" aria-pressed="${sel.includes(n)}" data-t="${esc(n)}">${esc(n)}</button>`).join('');
+ if(document.activeElement!==$('teacherOther'))$('teacherOther').value=sel.filter(n=>!TEACHERS.includes(n)).join('、');
+}
+function syncItem(id){const s=draft.scores[id];$('reason-'+id).hidden=s!=='na';document.querySelector(`[data-clear="${id}"]`).hidden=s===undefined;}
+function syncForm(){
+ const f=draft.fields;
+ document.querySelectorAll('[data-f]').forEach(el=>{const k=el.dataset.f;if(el.type==='radio')el.checked=f[k]===el.value;else el.value=f[k]??'';});
+ renderTeachers();
+ document.querySelectorAll('[name=stage]').forEach(el=>el.checked=Number(el.value)===f.stage);
+ document.querySelectorAll('[name=caseType]').forEach(el=>el.checked=el.value===f.caseType);
+ for(const i of RUBRIC){document.querySelectorAll(`[name="score-${i.id}"]`).forEach(el=>el.checked=String(draft.scores[i.id])===el.value);$('reason-'+i.id).value=draft.reasons[i.id]||'';syncItem(i.id);}
+ document.querySelectorAll('.invalid').forEach(el=>el.classList.remove('invalid'));
+ $('errors').hidden=true;
+ refresh();
+}
+const editingRecord=()=>draft.editingId?records.find(r=>r.id===draft.editingId)||null:null;
+function refresh(){
+ const f=draft.fields,c=calc(draft.scores),done=RUBRIC.length-c.pending;
+ $('total').textContent=fmt(c.total);
+ $('bar').style.width=done*10+'%';
+ $('totalHint').textContent=c.possible===0?'全部項目不適用，無法計分':c.pending?`還有 ${c.pending} 項未評`:'評分完成';
+ $('earned').textContent=c.earned;$('possible').textContent=c.possible;$('naCount').textContent=c.na+' 項';$('pendingCount').textContent=c.pending+' 項';
+ $('progressText').textContent=`${done}／10 已評`;
+ $('mProgress').textContent=`已評 ${done}／10`;
+ $('mScore').textContent=c.total!==null?`總分 ${fmt(c.total)}／100`:`累積 ${c.earned} 分・適用滿分 ${c.possible}`;
+ $('itemNav').innerHTML=RUBRIC.map(i=>{const s=draft.scores[i.id];return `<button type="button" data-jump="${i.id}" class="${s==='na'?'na':s!==undefined?'done':''}" title="${esc(i.title)}">${i.id}</button>`;}).join('');
+ $('f-caseType').hidden=!(f.stage>1);
+ $('safetyNoteWrap').hidden=f.safety!=='有';
+ const ed=editingRecord();
+ if(draft.editingId&&!ed)draft.editingId=null;
+ const label=ed?'完成修改':'完成本次評核';
+ ['finishBtn','finishBtn2','finishBtn3'].forEach(id=>$(id).textContent=label);
+ $('editBanner').hidden=!ed;$('clearBtn').hidden=!!ed;
+ if(ed)$('editTitle').textContent=`正在修改：${ed.student}｜${ed.stage?STAGE_SHORT[ed.stage]:'階段待補'}｜${ed.date}`;
+ const name=f.student.trim(),dup=!ed&&name&&f.stage?records.filter(r=>r.student===name&&r.stage===f.stage).sort(byDate).at(-1):null;
+ $('dupHint').hidden=!dup;
+ if(dup)$('dupHint').textContent=`${name} 已有「${STAGE_SHORT[f.stage]}」評核（${dup.date}，${fmt(calc(dup.scores).total)} 分）。完成時會詢問要取代舊紀錄或另存一筆。`;
+}
+
+function validate(){
+ const f=draft.fields,errs=[],add=(msg,target)=>errs.push({msg,target});
+ if(!f.teachers.length)add('請選擇評核老師','f-teachers');
+ if(!f.student.trim())add('請填寫學生姓名','f-student');
+ if(!normDate(f.date))add('請填寫評核日期','f-date');
+ if(!f.stage)add('請選擇評核階段','f-stage');
+ else if(f.stage>1&&!['AKI','ICU查房'].includes(f.caseType))add('請選擇案例類型（AKI 或 ICU 查房）','f-caseType');
+ const missing=RUBRIC.filter(i=>draft.scores[i.id]===undefined);
+ if(missing.length)add(`評分尚未完成：第 ${missing.map(i=>i.id).join('、')} 項`,'item-'+missing[0].id);
+ for(const i of RUBRIC)if(draft.scores[i.id]==='na'&&!String(draft.reasons[i.id]||'').trim())add(`第 ${i.id} 項選了不適用，請填寫原因`,'reason-'+i.id);
+ if(!missing.length&&calc(draft.scores).possible===0)add('全部項目都不適用，無法計算總分','item-1');
+ if(f.safety==='有'&&!f.safetyNote.trim())add('有病人安全問題時，請說明修正安排','f-safetyNote');
+ return errs;
+}
+function renderErrors(errs,mark=true){
+ const box=$('errors');
+ if(!errs.length){box.hidden=true;return;}
+ box.hidden=false;
+ box.innerHTML=`<b>還差 ${errs.length} 處，補齊後即可完成：</b><ul>${errs.map(e=>`<li><a href="#" data-go="${e.target}">${esc(e.msg)}</a></li>`).join('')}</ul>`;
+ if(mark){errs.forEach(e=>$(e.target)?.classList.add('invalid'));RUBRIC.filter(i=>draft.scores[i.id]===undefined).forEach(i=>$('item-'+i.id).classList.add('invalid'));}
+}
+function goTo(id){const el=$(id);if(!el)return;el.scrollIntoView({behavior:'smooth',block:'center'});if(el.matches('input,textarea'))setTimeout(()=>el.focus({preventScroll:true}),350);}
+
+function buildRecord(){
+ const f=draft.fields;
+ const r={id:draft.editingId||uid(),date:normDate(f.date),student:f.student.trim(),teachers:[...f.teachers],stage:f.stage,caseType:f.stage===1?'PRE ESRD':f.caseType,caseId:f.caseId.trim(),duration:String(f.duration).trim(),scores:{...draft.scores},reasons:{},rubricVersion:RUBRIC_VERSION};
+ for(const i of RUBRIC)r.reasons[i.id]=draft.scores[i.id]==='na'?String(draft.reasons[i.id]||'').trim():'';
+ for(const [k] of FEEDBACK)r[k]=String(f[k]||'').trim();
+ return r;
+}
+const draftHasContent=()=>!!(draft.fields.student.trim()||Object.keys(draft.scores).length||FEEDBACK.some(([k])=>String(draft.fields[k]||'').trim()));
+const isDirtyEdit=()=>{const r=editingRecord();return !!r&&comparable(r)!==comparable(buildRecord());};
+const hasUnsaved=()=>draft.editingId?isDirtyEdit():draftHasContent();
+
+let lastDone=null;
+async function finish(){
+ const errs=validate();renderErrors(errs);
+ if(errs.length){goTo(errs[0].target);toast(`還差 ${errs.length} 處未完成，已用橘色標示`);return;}
+ const rec=buildRecord(),editing=editingRecord();
+ let mode='new';
+ if(editing){
+  if(comparable(editing)===comparable(rec)){showDone(editing,'same');return;}
+  rec.createdAt=editing.createdAt;mode='updated';
+ }else{
+  rec.id=uid();
+  const dup=records.filter(r=>r.student===rec.student&&r.stage===rec.stage).sort(byDate).at(-1);
+  if(dup){
+   const ans=await ask('這位學生已有同階段評核',`${rec.student} 已有「${STAGE_SHORT[rec.stage]}」評核（${dup.date}，${fmt(calc(dup.scores).total)} 分）。本次結果要如何保存？`,[{label:'取代舊紀錄',value:'replace',cls:'primary'},{label:'另存為新的一筆',value:'new'},{label:'返回',value:null}]);
+   if(!ans)return;
+   if(ans==='replace'){rec.id=dup.id;rec.createdAt=dup.createdAt;mode='updated';}
+  }
+ }
+ const now=new Date().toISOString();rec.updatedAt=now;rec.createdAt=rec.createdAt||now;
+ const backup=records.slice(),idx=records.findIndex(r=>r.id===rec.id);
+ if(idx>=0)records[idx]=rec;else records.push(rec);
+ gsMark(rec.id,'upsert');
+ try{persist();}
+ catch{records=backup;renderErrors([{msg:'保存失敗：此瀏覽器無法寫入資料（空間不足或被封鎖）。請到「資料管理」下載 Excel 總檔後再試。',target:'finishPanel'}],false);toast('保存失敗，本次結果尚未加入學生紀錄');return;}
+ draft.editingId=rec.id;saveDraftNow();refresh();updateCounts();
+ showDone(rec,mode);
+}
+function showDone(rec,mode){
+ lastDone=rec;
+ const n=records.filter(r=>r.student===rec.student).length;
+ $('doneTitle').textContent=mode==='new'?'評核已完成並保存':mode==='updated'?'修改已保存':'內容沒有變更';
+ $('doneWho').textContent=`${rec.student}｜${STAGE_SHORT[rec.stage]}${rec.stage>1?'（'+rec.caseType+'）':''}｜${rec.date}`;
+ $('doneScore').textContent=fmt(calc(rec.scores).total);
+ $('doneText').textContent=`已在「學生紀錄」中，${rec.student} 目前共 ${n} 筆評核。`;
+ const sync=$('doneSync');sync.hidden=!meta.gsUrl;
+ if(meta.gsUrl){sync.style.color='var(--muted)';sync.textContent='正在加入 Google 雲端母檔…';gsFlush().then(ok=>{sync.style.color=ok?'var(--accent)':'#9b3d2e';sync.textContent=ok?'✓ 已加入 Google 雲端母檔':'⚠ 暫時連不到 Google；已保存在此瀏覽器，恢復連線後會自動補傳。';});}
+ $('doneDialog').showModal();
+}
+function startNext(){
+ draft=blankDraft(draft.fields.teachers,draft.fields.date||today());
+ saveDraftNow();syncForm();window.scrollTo({top:0,behavior:'smooth'});
+ setTimeout(()=>$('f-student').focus({preventScroll:true}),300);
+}
+async function loadForEdit(id){
+ const r=records.find(x=>x.id===id);if(!r)return;
+ if(draft.editingId!==id&&hasUnsaved()){
+  const ok=await ask('畫面上的評核尚未完成','載入這筆紀錄會取代畫面上尚未完成的內容。',[{label:'載入並修改',value:true,cls:'primary'},{label:'取消',value:false}]);
+  if(!ok)return;
+ }
+ draft={editingId:r.id,fields:{...blankFields(),date:r.date,teachers:[...r.teachers],student:r.student,stage:r.stage,caseType:r.caseType,caseId:r.caseId,duration:r.duration,...Object.fromEntries(FEEDBACK.map(([k])=>[k,r[k]]))},scores:{...r.scores},reasons:{...r.reasons}};
+ saveDraftNow();syncForm();$('detailDialog').close();show('assess');
+ if(!r.stage)setTimeout(()=>goTo('f-stage'),200);
+}
+async function deleteRecord(id){
+ const r=records.find(x=>x.id===id);if(!r)return;
+ const ok=await ask('刪除這筆評核？',`${r.student}｜${r.stage?STAGE_SHORT[r.stage]:'階段待補'}｜${r.date}。刪除後無法復原（已下載的 Excel 不受影響）。`,[{label:'刪除',value:true,cls:'danger'},{label:'取消',value:false}]);
+ if(!ok)return;
+ const backup=records.slice(),hadSync=r.id in meta.synced;
+ records=records.filter(x=>x.id!==id);
+ if(hadSync){delete meta.synced[id];meta.deletedSinceExport=(meta.deletedSinceExport||0)+1;}
+ gsMark(id,'delete');
+ try{persist();}catch{records=backup;toast('刪除失敗，資料未變更');return;}
+ if(draft.editingId===id){draft.editingId=null;saveDraftNow();}
+ refresh();updateCounts();renderRecords();renderDetail();toast(meta.gsUrl?'已刪除（Google 母檔同步刪除）':'已刪除');gsFlush();
+}
+
+/* ---------- 學生紀錄 ---------- */
+function groups(){
+ const m=new Map();
+ for(const r of records){if(!m.has(r.student))m.set(r.student,{name:r.student,list:[]});m.get(r.student).list.push(r);}
+ return [...m.values()].map(g=>{g.list.sort(byDate);g.stages=[1,2,3].map(s=>g.list.filter(r=>r.stage===s&&calc(r.scores).total!==null).at(-1)||null);g.noStage=g.list.filter(r=>!r.stage).length;return g;}).sort((a,b)=>a.name.localeCompare(b.name,'zh-Hant'));
+}
+function trendSvg(g){
+ const pts=g.stages.map((r,i)=>{if(!r)return null;const t=calc(r.scores).total;return {x:58+i*140,y:148-t*1.12,t};});
+ let lines='';for(let i=1;i<3;i++)if(pts[i]&&pts[i-1])lines+=`<line x1="${pts[i-1].x}" y1="${pts[i-1].y}" x2="${pts[i].x}" y2="${pts[i].y}" stroke="#247b70" stroke-width="3"/>`;
+ return `<svg viewBox="0 0 390 188" role="img" aria-label="${esc(g.name)} 三階段分數：${g.stages.map(r=>r?fmt(calc(r.scores).total):'未評').join('、')}">${[0,50,100].map(v=>`<line x1="40" y1="${148-v*1.12}" x2="370" y2="${148-v*1.12}" stroke="#e1e8ec"/><text x="8" y="${153-v*1.12}">${v}</text>`).join('')}${lines}${pts.map((p,i)=>p?`<circle cx="${p.x}" cy="${p.y}" r="6" fill="#247b70"/><text x="${p.x}" y="${p.y-13}" text-anchor="middle" class="pt">${p.t.toFixed(1)}</text>`:`<text x="${58+i*140}" y="133" text-anchor="middle">未評</text>`).join('')}${['初階','進階-1','進階-2'].map((v,i)=>`<text x="${58+i*140}" y="176" text-anchor="middle">${v}</text>`).join('')}</svg>`;
+}
+let shownGroups=[];
+function renderRecords(){
+ const all=groups(),q=$('recSearch').value.trim();
+ shownGroups=all.filter(g=>g.name.includes(q));
+ $('recSummary').textContent=records.length?`${all.length} 位學生、${records.length} 筆評核`:'';
+ if(!records.length){$('recCards').innerHTML='<div class="empty">還沒有評核紀錄。<br>完成評核後會出現在這裡；若有之前的 Excel 總檔，可到「資料管理」匯入。</div>';return;}
+ if(!shownGroups.length){$('recCards').innerHTML='<div class="empty">找不到符合的學生。</div>';return;}
+ $('recCards').innerHTML=shownGroups.map((g,i)=>{
+  const pts=g.stages.filter(Boolean),latest=pts.at(-1),prev=pts.at(-2);
+  const delta=latest&&prev?calc(latest.scores).total-calc(prev.scores).total:null;
+  return `<article class="card"><div class="card-head"><h3>${esc(g.name)}</h3><strong>${latest?fmt(calc(latest.scores).total)+'<small> 分</small>':'—'}</strong></div>
+  <p class="note">${g.list.length} 筆評核${delta!==null?`・較前一階段 ${delta>=0?'+':''}${delta.toFixed(1)} 分`:''}${g.noStage?`・<span class="tag-warn">${g.noStage} 筆階段待補</span>`:''}</p>
+  ${trendSvg(g)}<div class="stage-dates">${g.stages.map(r=>`<span>${r?esc(r.date)+'<br>'+esc(r.caseType):'尚未評核'}</span>`).join('')}</div>
+  <button type="button" class="wide" data-open="${i}">查看歷次評核與回饋</button></article>`;
+ }).join('');
+}
+let detailName='';
+function openDetail(name){detailName=name;renderDetail();if(!$('detailDialog').open)$('detailDialog').showModal();}
+function renderDetail(){
+ if(!$('detailDialog').open&&!detailName)return;
+ const list=records.filter(r=>r.student===detailName).sort(byDate);
+ if(!list.length){if($('detailDialog').open)$('detailDialog').close();return;}
+ $('detailTitle').textContent=detailName+' 的歷次評核';
+ $('detailBody').innerHTML='<p class="note">三階段案例難度不同，請搭配各項級別與回饋解讀分數。</p>'+list.map(r=>{
+  const c=calc(r.scores);
+  return `<article class="hist"><h3>${r.stage?esc(STAGE_SHORT[r.stage]):'<span class="tag-warn">階段待補</span>'}｜${esc(r.date)}｜${fmt(c.total)} 分</h3>
+  <p class="note">老師：${esc(r.teachers.join('、')||'—')}　案例：${esc(r.caseType||'—')}${r.caseId?'　代碼：'+esc(r.caseId):''}　適用滿分：${c.possible}</p>
+  <div class="lv-grid">${RUBRIC.map(i=>{const s=r.scores[i.id];return `<span>${i.id}. ${esc(i.title)}：<b>${s==='na'?'不適用':s===undefined?'未評':s+' 級'}</b>${s==='na'&&r.reasons[i.id]?`<span class="note">（${esc(r.reasons[i.id])}）</span>`:''}</span>`;}).join('')}</div>
+  <div class="fb">${FEEDBACK.filter(([k])=>r[k]).map(([k,t])=>`<h4>${t}</h4><p>${esc(r[k])}</p>`).join('')}</div>
+  <div class="dialog-actions"><button type="button" data-edit="${esc(r.id)}">${r.stage?'修改':'補選階段並修改'}</button><button type="button" data-pdf="${esc(r.id)}">下載學生 PDF</button><button type="button" class="danger" data-del="${esc(r.id)}">刪除</button></div></article>`;
+ }).join('');
+}
+
+/* ---------- 資料管理 ---------- */
+function updateCounts(){
+ $('recCount').textContent=records.length;
+ const pc=pendingCount();$('unsyncDot').hidden=pc===0;$('unsyncDot').title=meta.gsUrl?'有紀錄尚未上傳到 Google 母檔':'有紀錄尚未下載到 Excel';
+ $('studentList').innerHTML=[...new Set(records.map(r=>r.student))].map(n=>`<option value="${esc(n)}">`).join('');
+}
+function renderData(){
+ $('dStudents').textContent=new Set(records.map(r=>r.student)).size;
+ $('dRecords').textContent=records.length;
+ $('dLast').textContent=meta.lastExportAt?new Date(meta.lastExportAt).toLocaleString('zh-TW',{hour12:false}):'尚未下載';
+ const u=meta.gsUrl?0:unsyncedCount();$('dUnsync').hidden=!u;
+ $('dUnsync').textContent=`有 ${u} 筆新增、修改或刪除尚未下載到 Excel。`;
+ gsRender();
+ $('exportBtn').disabled=!records.length;
+}
+const EXCEL_HEAD=()=>['評核識別碼','最後修改時間','評核日期','學生姓名','評核老師','評核階段','階段順序','案例類型','案例代碼','報告分鐘','實際得分','適用滿分','百分制總分',...RUBRIC.map(i=>`${i.id} ${i.title}`),...RUBRIC.map(i=>`${i.id} 不適用原因`),...FEEDBACK.map(x=>x[2]),'評分表版本'];
+function rowFor(r){const c=calc(r.scores),d=r.duration.trim();return [r.id,r.updatedAt,r.date,r.student,r.teachers.join('、'),r.stage?STAGE_EXCEL[r.stage]:'待補',r.stage||'',r.caseType,r.caseId,d!==''&&isFinite(Number(d))?Number(d):d,c.earned,c.possible,c.total===null?'':c.total,...RUBRIC.map(i=>{const s=r.scores[i.id];return s==='na'?'不適用':s===undefined?'':s;}),...RUBRIC.map(i=>r.scores[i.id]==='na'?r.reasons[i.id]:''),...FEEDBACK.map(([k])=>r[k]),r.rubricVersion];}
+function exportExcel(){
+ if(!records.length){toast('目前沒有紀錄可下載');return;}
+ const sorted=[...records].sort((a,b)=>a.student.localeCompare(b.student,'zh-Hant')||byDate(a,b));
+ const rows=[EXCEL_HEAD(),...sorted.map(rowFor)];
+ const summary=[['學生姓名','第一次｜初階臨床','第一次日期','第二次｜進階臨床-1','第二次日期','第三次｜進階臨床-2','第三次日期','累積評核筆數'],...groups().map(g=>[g.name,...g.stages.flatMap(r=>r?[calc(r.scores).total,r.date]:['','']),g.list.length])];
+ const notes=[['項目','說明'],['評核紀錄','每次評核一列；修改會更新同一列，不會新增。'],['學生趨勢總覽','每位學生一列，各階段取最近一次已完成的評核。'],['總分','實際得分 ÷ 適用滿分 × 100；不適用項目排除。'],['級別','2＝獨立完成；1＝需提示補足；0＝未達要求'],['評核識別碼','系統用來辨識同一筆紀錄，請勿修改；匯入時相同識別碼不會重複。'],['使用方式','每次下載都是完整總檔，保留最新一份即可。']];
+ const blob=xlsx([{name:'評核紀錄',rows},{name:'學生趨勢總覽',rows:summary},{name:'說明',rows:notes}]);
+ const d=new Date(),url=URL.createObjectURL(blob),a=document.createElement('a');
+ a.href=url;a.download=`Pre-ESRD_評核總檔_${today()}_${pad(d.getHours())}${pad(d.getMinutes())}.xlsx`;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),20000);
+ meta.lastExportAt=d.toISOString();meta.synced=Object.fromEntries(records.map(r=>[r.id,r.updatedAt]));meta.deletedSinceExport=0;saveMeta();
+ renderData();updateCounts();toast(`已下載 Excel 總檔，共 ${records.length} 筆`);
+}
+function parseRows(rows){
+ const h=(rows[0]||[]).map(x=>String(x??'').trim()),col=n=>h.indexOf(n);
+ if(col('學生姓名')<0||col('評核日期')<0)throw Error('找不到「學生姓名」與「評核日期」欄位，請選擇本工具下載的 Excel 總檔');
+ const get=(row,n)=>{const i=col(n);return i<0?'':row[i]??'';};
+ const map=new Map();let bad=0;
+ for(const row of rows.slice(1)){
+  if(!row||!row.some(v=>v!==''&&v!==undefined&&v!==null))continue;
+  const student=String(get(row,'學生姓名')).trim(),date=normDate(get(row,'評核日期'));
+  if(!student||!date){bad++;continue;}
+  const scores={},reasons={};
+  for(const i of RUBRIC){const s=String(get(row,`${i.id} ${i.title}`)).trim();if(s==='不適用')scores[i.id]='na';else if(s!==''&&[0,1,2].includes(Number(s)))scores[i.id]=Number(s);reasons[i.id]=String(get(row,`${i.id} 不適用原因`));}
+  const teachers=splitNames(get(row,'評核老師')),caseId=String(get(row,'案例代碼'));
+  const stage=parseStage(get(row,'階段順序'))||parseStage(get(row,'評核階段'));
+  let caseType=String(get(row,'案例類型')).trim();if(caseType==='待確認')caseType='';
+  const id=String(get(row,'評核識別碼')).trim()||'legacy:'+JSON.stringify([student,[...teachers].sort().join('、'),date,caseId.trim()]);
+  const rec=cleanRecord({id,student,date,teachers,stage,caseType,caseId,duration:get(row,'報告分鐘'),scores,reasons,updatedAt:String(get(row,'最後修改時間')),rubricVersion:String(get(row,'評分表版本'))==='待確認'?RUBRIC_VERSION:get(row,'評分表版本'),...Object.fromEntries(FEEDBACK.map(([k,,x])=>[k,get(row,x)]))});
+  if(rec)map.set(rec.id,rec);else bad++;
+ }
+ return {list:[...map.values()],bad};
+}
+async function importExcel(file){
+ const box=$('importResult');box.innerHTML=`<div class="panel">正在讀取 ${esc(file.name)}…</div>`;
+ try{const {list,bad}=parseRows(await readWorkbook(file));mergeIncoming(list,bad,file.name,'excel');}
+ catch(e){box.innerHTML=`<div class="hint-warn">無法匯入：${esc(e.message||'檔案格式不正確')}</div>`;}
+}
+/* source: 'excel' | 'google' | 'silent'（開啟頁面時自動從 Google 補入新紀錄） */
+function mergeIncoming(list,bad,name,source){
+ const box=$('importResult'),fromG=source!=='excel',srcName=fromG?'Google 母檔':'Excel';
+ const added=[],same=[],conflicts=[];
+ for(const r of list){const old=records.find(x=>x.id===r.id);if(!old)added.push(r);else if(comparable(old)===comparable(r))same.push(old);else conflicts.push({old,inc:r});}
+ const backup=records.slice(),backupMeta=JSON.stringify(meta);
+ records.push(...added);
+ if(source==='excel'){for(const r of [...added,...same])meta.synced[r.id]=r.updatedAt;added.forEach(r=>gsMark(r.id,'upsert'));}
+ try{persist();}catch{records=backup;meta=JSON.parse(backupMeta);throw Error('此瀏覽器無法寫入資料');}
+ updateCounts();renderData();refresh();
+ if(document.body.dataset.view==='records')renderRecords();
+ if(source==='excel')gsFlush();
+ if(source==='silent'){if(added.length)toast(`已從 Google 母檔載入 ${added.length} 筆新紀錄`);return {added:added.length};}
+ let html=`<div class="panel"><h2 style="margin:0 0 6px;font-size:17px">已匯入 ${esc(name)}</h2><p style="margin:0">新增 <b>${added.length}</b> 筆、已存在略過 <b>${same.length}</b> 筆${bad?`、無法辨識 ${bad} 列（缺學生姓名或日期）`:''}${conflicts.length?`；另有 <b>${conflicts.length}</b> 筆內容不同，請選擇要保留的版本：`:'。'}</p>`;
+ if(conflicts.length){
+  html+=conflicts.map(({old,inc},n)=>{const newer=(inc.updatedAt||'')>(old.updatedAt||'')?'inc':'old';return `<div class="conflict"><b>${esc(old.student)}｜${old.stage?STAGE_SHORT[old.stage]:'階段待補'}｜${esc(old.date)}</b><div class="inline-choices"><label class="choice"><input type="radio" name="cf-${n}" value="old" ${newer==='old'?'checked':''}>保留此瀏覽器版本（${fmt(calc(old.scores).total)} 分${old.updatedAt?'，修改於 '+esc(old.updatedAt.slice(0,10)):''}）</label><label class="choice"><input type="radio" name="cf-${n}" value="inc" ${newer==='inc'?'checked':''}>採用 ${srcName} 版本（${fmt(calc(inc.scores).total)} 分${inc.updatedAt?'，修改於 '+esc(inc.updatedAt.slice(0,10)):''}）</label></div></div>`;}).join('')+`<button type="button" class="primary" id="applyConflicts">套用選擇</button>`;
+ }
+ box.innerHTML=html+'</div>';
+ if(conflicts.length)$('applyConflicts').onclick=()=>{
+  let n=0;
+  conflicts.forEach(({old,inc},i)=>{const k=records.findIndex(r=>r.id===old.id);if(k<0)return;
+   if(document.querySelector(`[name="cf-${i}"]:checked`)?.value==='inc'){records[k]=inc;if(!fromG)meta.synced[inc.id]=inc.updatedAt;gsMark(inc.id,fromG?null:'upsert');n++;}
+   else if(fromG)gsMark(old.id,'upsert');});
+  try{persist();}catch{toast('寫入失敗，請重試');return;}
+  updateCounts();renderData();refresh();gsFlush();
+  box.innerHTML=`<div class="panel">已處理不同內容的 ${conflicts.length} 筆：採用 ${srcName} 版本 ${n} 筆，其餘保留此瀏覽器版本${fromG?'（並更新到 Google 母檔）':''}。</div>`;
+ };
+ toast(`匯入完成：新增 ${added.length} 筆`);
+ return {added:added.length};
+}
+
+/* ---------- Google 雲端母檔（Apps Script 網頁應用程式） ---------- */
+const GS_SCRIPT=`// Pre-ESRD 評核母檔同步程式（貼在母檔的 擴充功能 → Apps Script）
+const SHEET_NAME = '評核紀錄';
+
+function doGet(e) {
+  const sh = getSheet_();
+  const rows = sh.getLastRow() ? sh.getDataRange().getDisplayValues() : [];
+  return json_({ ok: true, rows: rows });
+}
+
+function doPost(e) {
+  const lock = LockService.getScriptLock();
+  lock.waitLock(20000);
+  try {
+    const req = JSON.parse(e.postData.contents);
+    const sh = getSheet_();
+    if (req.action === 'ping') return json_({ ok: true, count: Math.max(sh.getLastRow() - 1, 0) });
+    let header = sh.getLastRow() ? sh.getRange(1, 1, 1, sh.getLastColumn()).getDisplayValues()[0] : [];
+    if (!header.length || header[0] !== '評核識別碼') {
+      if (sh.getLastRow() > 0) throw new Error('「評核紀錄」第一列不是本工具的欄位名稱');
+      header = req.header;
+      sh.getRange(1, 1, 1, header.length).setValues([header]).setFontWeight('bold');
+      sh.setFrozenRows(1);
+    }
+    const ids = sh.getLastRow() > 1 ? sh.getRange(2, 1, sh.getLastRow() - 1, 1).getDisplayValues().map(r => r[0]) : [];
+    let added = 0, updated = 0, deleted = 0;
+    if (req.action === 'upsert') {
+      req.rows.forEach(row => {
+        const obj = {};
+        req.header.forEach((h, i) => obj[h] = row[i]);
+        const out = header.map(h => obj[h] === undefined || obj[h] === null ? '' : obj[h]);
+        let i = ids.indexOf(String(row[0]));
+        let at;
+        if (i >= 0) { at = i + 2; updated++; } else { at = ids.length + 2; ids.push(String(row[0])); added++; }
+        sh.getRange(at, 1, 1, out.length).setNumberFormat('@').setValues([out.map(v => String(v))]);
+      });
+    } else if (req.action === 'delete') {
+      req.ids.forEach(id => {
+        const i = ids.indexOf(String(id));
+        if (i >= 0) { sh.deleteRow(i + 2); ids.splice(i, 1); deleted++; }
+      });
+    } else {
+      throw new Error('未知的動作');
+    }
+    return json_({ ok: true, added: added, updated: updated, deleted: deleted, count: ids.length });
+  } catch (err) {
+    return json_({ ok: false, error: String(err && err.message || err) });
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+function getSheet_() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  return ss.getSheetByName(SHEET_NAME) || ss.insertSheet(SHEET_NAME);
+}
+
+function json_(o) {
+  return ContentService.createTextOutput(JSON.stringify(o)).setMimeType(ContentService.MimeType.JSON);
+}
+`;
+if(!meta.gsPending||typeof meta.gsPending!=='object')meta.gsPending={};
+const gsUrlOk=u=>/^https:\/\/script\.google(usercontent)?\.com\/\S+$/.test(u);
+const pendingCount=()=>meta.gsUrl?Object.keys(meta.gsPending).length:unsyncedCount();
+function gsMark(id,op){if(!meta.gsUrl)return;if(op)meta.gsPending[id]=op;else delete meta.gsPending[id];}
+async function gsCall(body,url=meta.gsUrl){
+ const ctl=new AbortController(),t=setTimeout(()=>ctl.abort(),30000);
+ try{
+  const res=body?await fetch(url,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(body),redirect:'follow',signal:ctl.signal}):await fetch(url,{redirect:'follow',signal:ctl.signal});
+  let j;try{j=await res.json();}catch{throw Error('Google 回應的不是本工具的格式，請確認網址與部署設定（誰可以存取：所有人）');}
+  if(!j.ok)throw Error(j.error||'Google 回應錯誤');
+  return j;
+ }catch(e){if(e.name==='AbortError')throw Error('連線逾時');if(e instanceof TypeError)throw Error('無法連到 Google（請確認網路，或部署時「誰可以存取」選了「所有人」）');throw e;}
+ finally{clearTimeout(t);}
+}
+let gsBusy=null;
+function gsFlush(){
+ if(!meta.gsUrl)return Promise.resolve(null);
+ if(gsBusy)return gsBusy.then(()=>gsFlush());
+ gsBusy=(async()=>{
+  for(const [id,op] of Object.entries(meta.gsPending))if(op==='upsert'&&!records.some(r=>r.id===id))delete meta.gsPending[id];
+  const ids=Object.keys(meta.gsPending);
+  if(!ids.length){saveMeta();return true;}
+  try{
+   const up=records.filter(r=>meta.gsPending[r.id]==='upsert'),del=ids.filter(id=>meta.gsPending[id]==='delete');
+   const sent=up.map(r=>[r.id,r.updatedAt]);
+   if(up.length)await gsCall({action:'upsert',header:EXCEL_HEAD(),rows:up.map(rowFor)});
+   if(del.length)await gsCall({action:'delete',ids:del});
+   for(const [id,u] of sent){const r=records.find(x=>x.id===id);if(meta.gsPending[id]==='upsert'&&(!r||r.updatedAt===u))delete meta.gsPending[id];}
+   for(const id of del)if(meta.gsPending[id]==='delete')delete meta.gsPending[id];
+   meta.gsLastSync=new Date().toISOString();meta.gsError='';saveMeta();return true;
+  }catch(e){meta.gsError=e.message||'無法連線';saveMeta();return false;}
+ })().finally(()=>{gsBusy=null;gsRender();updateCounts();});
+ return gsBusy;
+}
+async function gsPull(source){
+ const j=await gsCall(null);
+ const rows=(j.rows||[]).filter(r=>r.some(v=>String(v).trim()!==''));
+ const {list,bad}=rows.length<=1?{list:[],bad:0}:parseRows(rows);
+ const res=mergeIncoming(list,bad,'Google 母檔',source)||{};
+ res.ids=list.map(r=>r.id);return res;
+}
+function gsRender(){
+ const on=!!meta.gsUrl,n=Object.keys(meta.gsPending||{}).length;
+ $('gsBadge').textContent=on?(meta.gsError?'連線異常':'已連線'):'未連線';
+ $('gsBadge').style.background=on?(meta.gsError?'#fff0ed':'#e5f2ed'):'';$('gsBadge').style.color=on?(meta.gsError?'#9b3d2e':'#175951'):'';
+ $('gsSetup').hidden=on;$('gsActions').hidden=!on;if(!on&&DEFAULT_GS_URL&&!$('gsUrl').value)$('gsUrl').value=DEFAULT_GS_URL;$('gsRetry').hidden=!n;
+ $('gsHelp').hidden=on;
+ $('gsStatus').textContent=!on?'設定後，每次完成評核都會自動加入 Google 試算表，不需要再下載或合併檔案。':
+  (meta.gsError?`最近一次同步失敗：${meta.gsError}。資料已保存在此瀏覽器，恢復連線後會自動補傳。`:`每次完成評核會自動加入 Google 母檔。${meta.gsLastSync?'最近同步：'+new Date(meta.gsLastSync).toLocaleString('zh-TW',{hour12:false})+'。':''}`)+(on&&n?` 目前有 ${n} 筆等待上傳。`:'');
+}
+async function gsConnect(){
+ const url=$('gsUrl').value.trim();
+ if(!gsUrlOk(url)){toast('網址格式不對，應為 https://script.google.com/macros/s/…/exec');$('gsUrl').classList.add('invalid');return;}
+ $('gsSave').disabled=true;$('gsStatus').textContent='正在測試連線…';
+ try{
+  const j=await gsCall({action:'ping'},url);
+  meta.gsUrl=url;meta.gsError='';meta.gsPending={};meta.gsOptOut=false;saveMeta();
+  const res=await gsPull('google'),remote=new Set(res.ids||[]);
+  records.filter(r=>!remote.has(r.id)).forEach(r=>gsMark(r.id,'upsert'));saveMeta();
+  const ok=await gsFlush();
+  toast(`已連線 Google 母檔（原有 ${j.count} 筆）`+(ok?'':'，部分紀錄稍後補傳'));
+ }catch(e){$('gsStatus').textContent='連線失敗：'+e.message;}
+ finally{$('gsSave').disabled=false;renderData();updateCounts();}
+}
+
+/* ---------- Excel 讀寫（無外部套件） ---------- */
+async function readWorkbook(file){
+ if(file.size>30e6)throw Error('檔案超過 30 MB');
+ if(typeof DecompressionStream==='undefined')throw Error('此瀏覽器不支援讀取 Excel，請改用新版 Chrome、Edge 或 Safari');
+ const bytes=new Uint8Array(await file.arrayBuffer()),d=new DataView(bytes.buffer),u16=p=>d.getUint16(p,true),u32=p=>d.getUint32(p,true);
+ const decoder=new TextDecoder(),entries=new Map();
+ let end=bytes.length-22;
+ while(end>=Math.max(0,bytes.length-65557)&&(u32(end)!==0x06054b50||end+22+u16(end+20)!==bytes.length))end--;
+ if(end<Math.max(0,bytes.length-65557))throw Error('請選擇 .xlsx 檔案');
+ let pos=u32(end+16);
+ for(let i=0;i<u16(end+10);i++){
+  if(u32(pos)!==0x02014b50)throw Error('Excel 檔案結構不完整');
+  const n=u16(pos+28);
+  entries.set(decoder.decode(bytes.slice(pos+46,pos+46+n)),{method:u16(pos+10),size:u32(pos+20),plain:u32(pos+24),offset:u32(pos+42)});
+  pos+=46+n+u16(pos+30)+u16(pos+32);
+ }
+ async function xml(name,optional=false){
+  const e=entries.get(name);if(!e&&optional)return null;
+  if(!e||e.plain>60e6||u32(e.offset)!==0x04034b50)throw Error('缺少有效的工作表');
+  const start=e.offset+30+u16(e.offset+26)+u16(e.offset+28);
+  let data=bytes.slice(start,start+e.size);
+  if(e.method===8)data=new Uint8Array(await new Response(new Blob([data]).stream().pipeThrough(new DecompressionStream('deflate-raw'))).arrayBuffer());
+  else if(e.method!==0)throw Error('不支援此 Excel 壓縮格式');
+  const doc=new DOMParser().parseFromString(decoder.decode(data),'application/xml');
+  if(doc.querySelector('parsererror'))throw Error('Excel 內容無法解析');
+  return doc;
+ }
+ const wb=await xml('xl/workbook.xml');
+ const sheets=[...wb.getElementsByTagNameNS('*','sheet')];
+ const sheet=sheets.find(s=>s.getAttribute('name')==='評核紀錄')||sheets[0];
+ if(!sheet)throw Error('找不到工作表');
+ const rels=await xml('xl/_rels/workbook.xml.rels');
+ const relId=sheet.getAttributeNS('http://schemas.openxmlformats.org/officeDocument/2006/relationships','id');
+ const target=[...rels.getElementsByTagNameNS('*','Relationship')].find(el=>el.getAttribute('Id')===relId)?.getAttribute('Target');
+ if(!target)throw Error('找不到「評核紀錄」工作表');
+ const path=new URL(target,'https://workbook.invalid/xl/workbook.xml').pathname.slice(1);
+ const ss=await xml('xl/sharedStrings.xml',true);
+ const strings=ss?[...ss.getElementsByTagNameNS('*','si')].map(el=>[...el.getElementsByTagNameNS('*','t')].map(t=>t.textContent).join('')):[];
+ const ws=await xml(decodeURIComponent(path));
+ return [...ws.getElementsByTagNameNS('*','row')].map(r=>{
+  const values=[];
+  for(const cell of r.getElementsByTagNameNS('*','c')){
+   const ref=cell.getAttribute('r')?.match(/^[A-Z]{1,3}/)?.[0],i=ref?[...ref].reduce((n,c)=>n*26+c.charCodeAt(0)-64,0)-1:values.length;
+   const type=cell.getAttribute('t'),v=cell.getElementsByTagNameNS('*','v')[0]?.textContent;
+   values[i]=type==='inlineStr'?[...cell.getElementsByTagNameNS('*','t')].map(t=>t.textContent).join(''):type==='s'?strings[Number(v)]??'':(!type||type==='n')&&v!==undefined?Number(v):v??'';
+  }
+  for(let i=0;i<values.length;i++)if(values[i]===undefined)values[i]='';
+  return values;
+ });
+}
+function xlsx(sheets){
+ const enc=new TextEncoder();
+ const x=s=>String(s??'').replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f￾￿]/g,'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+ const rel='http://schemas.openxmlformats.org/officeDocument/2006/relationships',pkg='http://schemas.openxmlformats.org/package/2006/relationships',ns='http://schemas.openxmlformats.org/spreadsheetml/2006/main',ct='application/vnd.openxmlformats-officedocument.spreadsheetml.';
+ const fs={
+  '[Content_Types].xml':`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="${ct}sheet.main+xml"/>${sheets.map((s,i)=>`<Override PartName="/xl/worksheets/sheet${i+1}.xml" ContentType="${ct}worksheet+xml"/>`).join('')}</Types>`,
+  '_rels/.rels':`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="${pkg}"><Relationship Id="rId1" Type="${rel}/officeDocument" Target="xl/workbook.xml"/></Relationships>`,
+  'xl/workbook.xml':`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><workbook xmlns="${ns}" xmlns:r="${rel}"><sheets>${sheets.map((s,i)=>`<sheet name="${x(s.name)}" sheetId="${i+1}" r:id="rId${i+1}"/>`).join('')}</sheets></workbook>`,
+  'xl/_rels/workbook.xml.rels':`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="${pkg}">${sheets.map((s,i)=>`<Relationship Id="rId${i+1}" Type="${rel}/worksheet" Target="worksheets/sheet${i+1}.xml"/>`).join('')}</Relationships>`
+ };
+ sheets.forEach((s,i)=>fs[`xl/worksheets/sheet${i+1}.xml`]=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><worksheet xmlns="${ns}"><sheetData>${s.rows.map(row=>'<row>'+row.map(v=>typeof v==='number'&&isFinite(v)?`<c><v>${v}</v></c>`:`<c t="inlineStr"><is><t xml:space="preserve">${x(v)}</t></is></c>`).join('')+'</row>').join('')}</sheetData></worksheet>`);
+ const crc=b=>{let c=-1;for(const n of b){c^=n;for(let j=0;j<8;j++)c=(c>>>1)^((c&1)?0xedb88320:0);}return (~c)>>>0;};
+ const parts=[],central=[];let offset=0,size=0;
+ const head=(n,vals)=>{const b=new Uint8Array(n),v=new DataView(b.buffer);for(const [at,num,w] of vals)w===4?v.setUint32(at,num,true):v.setUint16(at,num,true);return b;};
+ for(const [name,content] of Object.entries(fs)){
+  const n=enc.encode(name),b=enc.encode(content),c=crc(b);
+  parts.push(head(30,[[0,0x04034b50,4],[4,20],[6,0x0800],[14,c,4],[18,b.length,4],[22,b.length,4],[26,n.length]]),n,b);
+  central.push(head(46,[[0,0x02014b50,4],[4,20],[6,20],[8,0x0800],[16,c,4],[20,b.length,4],[24,b.length,4],[28,n.length],[42,offset,4]]),n);
+  offset+=30+n.length+b.length;size+=46+n.length;
+ }
+ const count=Object.keys(fs).length;
+ return new Blob([...parts,...central,head(22,[[0,0x06054b50,4],[8,count],[10,count],[12,size,4],[16,offset,4]])],{type:ct+'sheet'});
+}
+
+/* ---------- 學生 PDF ---------- */
+function pdfBlob(images){
+ const enc=new TextEncoder(),pieces=[],offsets=[0];let len=0;
+ const add=v=>{const p=typeof v==='string'?enc.encode(v):v;pieces.push(p);len+=p.length;};
+ const obj=(i,body)=>{offsets[i]=len;add(i+' 0 obj\n');body();add('\nendobj\n');};
+ add('%PDF-1.4\n');
+ obj(1,()=>add('<< /Type /Catalog /Pages 2 0 R >>'));
+ obj(2,()=>add('<< /Type /Pages /Count '+images.length+' /Kids ['+images.map((_,i)=>(3+i*3)+' 0 R').join(' ')+'] >>'));
+ images.forEach((img,i)=>{
+  const id=3+i*3;
+  obj(id,()=>add('<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Resources << /XObject << /Im0 '+(id+1)+' 0 R >> >> /Contents '+(id+2)+' 0 R >>'));
+  obj(id+1,()=>{add('<< /Type /XObject /Subtype /Image /Width 1240 /Height 1754 /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length '+img.length+' >>\nstream\n');add(img);add('\nendstream');});
+  const ops='q\n595.28 0 0 841.89 0 0 cm\n/Im0 Do\nQ\n';
+  obj(id+2,()=>add('<< /Length '+ops.length+' >>\nstream\n'+ops+'endstream'));
+ });
+ const start=len;
+ add('xref\n0 '+offsets.length+'\n0000000000 65535 f \n'+offsets.slice(1).map(n=>String(n).padStart(10,'0')+' 00000 n \n').join('')+'trailer\n<< /Size '+offsets.length+' /Root 1 0 R >>\nstartxref\n'+start+'\n%%EOF\n');
+ return new Blob(pieces,{type:'application/pdf'});
+}
+function downloadPdf(r){
+ try{
+  const canvas=document.createElement('canvas');canvas.width=1240;canvas.height=1754;
+  const ctx=canvas.getContext('2d');if(!ctx)throw Error('canvas');
+  const pages=[],m=70,max=1100;let y=m;
+  const bg=()=>{ctx.fillStyle='#fff';ctx.fillRect(0,0,1240,1754);ctx.textBaseline='top';y=m;};
+  const savePage=()=>pages.push(Uint8Array.from(atob(canvas.toDataURL('image/jpeg',.94).split(',')[1]),c=>c.charCodeAt(0)));
+  const font=(s,b)=>ctx.font=(b?'bold ':'')+s+'px "Noto Sans TC","Microsoft JhengHei","PingFang TC",sans-serif';
+  const put=(t,x,top,s,b=false,color='#213444')=>{font(s,b);ctx.fillStyle=color;ctx.fillText(t,x,top);};
+  const wrap=(str,s,b=false)=>{font(s,b);return String(str).split('\n').flatMap(part=>{const lines=[];let line='';for(const c of part){if(line&&ctx.measureText(line+c).width>max){lines.push(line);line=c;}else line+=c;}lines.push(line);return lines;});};
+  const room=h=>{if(y+h<=1684)return;savePage();bg();put('Pre-ESRD 案例報告回饋（續）',m,y,26,true);y+=48;};
+  const block=(s,size=24,line=34,b=false,color)=>{for(const l of wrap(s,size,b)){room(line);put(l,m,y,size,b,color);y+=line;}};
+  bg();
+  block('臨床藥學教學 ／ 學生回饋單',23,39,true,'#17665d');
+  block('Pre-ESRD 案例報告回饋',45,66,true);
+  block(`學生：${r.student}　評核日期：${r.date}`,24,36);
+  block(`評核老師：${r.teachers.join('、')||'—'}`,24,36);
+  block(`階段：${r.stage?STAGE_SHORT[r.stage]:'待補'}｜${r.caseType||'—'}`,24,36);
+  y+=22;block('各項能力表現',30,45,true);
+  const rows=[['能力面向','本次級別'],...RUBRIC.map(i=>{const s=r.scores[i.id];return [pad(i.id)+'　'+i.title,s==='na'?'不適用':s===undefined?'尚未評核':s+' 級'];})];
+  rows.forEach((row,i)=>{room(42);ctx.fillStyle=i===0?'#eaf2f0':i%2?'#f7f9fa':'#ffffff';ctx.fillRect(m,y,max,42);put(row[0],m+15,y+6,23,i===0);put(row[1],930,y+6,23,true,'#17665d');y+=42;});
+  y+=16;
+  block('級別定義：2 級＝可獨立完成 ｜ 1 級＝需提示補足 ｜ 0 級＝尚未達成本項要求',21,30);
+  block('不適用＝本次不評核此項。',21,30);
+  y+=22;ctx.fillStyle='#c9dad6';ctx.fillRect(m,y,max,2);y+=22;
+  block('教師回饋與下次練習',30,46,true);
+  const fb=FEEDBACK.filter(([k])=>String(r[k]||'').trim());
+  if(!fb.length)block('本次未填寫文字回饋。');
+  for(const [k,t] of fb){room(72);block(t,24,34,true,'#17665d');block(k==='safety'&&r[k]==='有'?'有，需優先修正':r[k],24,34);y+=14;}
+  savePage();
+  const url=URL.createObjectURL(pdfBlob(pages)),a=document.createElement('a');
+  a.href=url;a.download='Pre-ESRD_學生回饋_'+r.student.replace(/[\\/:*?"<>|]/g,'_').slice(0,40)+'_'+r.date+'.pdf';
+  document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),60000);
+  toast('已下載學生 PDF');
+ }catch(e){console.error(e);toast('PDF 產生失敗，請改用 Chrome 再試');}
+}
+
+/* ---------- 語音 ---------- */
+function splitFeedback(text){
+ const re=/(?:^|[\n。；;，,]\s*)(表現優點|優點|優先改善事項|改善|學生下一步|下一步)\s*(?:[:：]|是)\s*/g;
+ const marks=[...text.matchAll(re)],out={};
+ marks.forEach((mk,i)=>{const key=mk[1].includes('優點')?'strength':mk[1].includes('改善')?'improve':'next';const chunk=text.slice(mk.index+mk[0].length,marks[i+1]?.index??text.length).trim();if(chunk)out[key]=[out[key],chunk].filter(Boolean).join('\n');});
+ return out;
+}
+function setField(k,v){draft.fields[k]=v;const el=document.querySelector(`[data-f="${k}"]`);if(el)el.value=v;saveDraft();}
+function initVoice(){
+ const status=$('voiceStatus'),start=$('voiceStart'),stop=$('voiceStop');
+ $('voiceOrganize').onclick=()=>{
+  const parts=Object.entries(splitFeedback(String(draft.fields.voice||'').trim()));
+  if(!parts.length){status.textContent='請在每段前加上「優點：」「改善：」或「下一步：」再整理。';return;}
+  let n=0;for(const [k,v] of parts){const cur=String(draft.fields[k]||'').trim();if(!cur.split('\n\n').includes(v)){setField(k,[cur,v].filter(Boolean).join('\n\n'));n++;}}
+  status.textContent=n?'已補入下方欄位，原有內容保留，請再核對。':'相同內容已在欄位中。';
+ };
+ const R=window.SpeechRecognition||window.webkitSpeechRecognition;
+ if(!R){start.disabled=true;status.textContent='此瀏覽器不支援語音辨識，可改用鍵盤的語音輸入或貼上文字。';return;}
+ const rec=new R();rec.lang='zh-TW';rec.continuous=true;rec.interimResults=false;let active=false;
+ const done=()=>{active=false;start.disabled=false;stop.disabled=true;};
+ rec.onresult=e=>{const t=Array.from(e.results).slice(e.resultIndex).filter(r=>r.isFinal).map(r=>r[0].transcript.trim()).join('。');if(t)setField('voice',[String(draft.fields.voice||'').trim(),t].filter(Boolean).join('\n'));};
+ rec.onend=()=>{done();if(status.textContent==='正在聆聽…')status.textContent='已停止，請核對逐字稿後再整理。';};
+ rec.onerror=()=>{done();status.textContent='無法繼續辨識，請檢查麥克風權限或直接貼上文字。';};
+ start.onclick=()=>{try{rec.start();active=true;start.disabled=true;stop.disabled=false;status.textContent='正在聆聽…';}catch{done();status.textContent='無法開始語音輸入。';}};
+ stop.onclick=()=>{if(active)rec.stop();};
+}
+
+/* ---------- 切換頁面與事件 ---------- */
+function show(v){
+ document.querySelectorAll('.tab').forEach(t=>t.setAttribute('aria-selected',String(t.dataset.view===v)));
+ for(const s of ['assess','records','data'])$('view-'+s).hidden=s!==v;
+ document.body.dataset.view=v;
+ if(v==='records')renderRecords();
+ if(v==='data')renderData();
+ window.scrollTo({top:0});
+}
+function onField(e){
+ const el=e.target;if(!el.closest||!el.closest('#view-assess'))return;
+ el.classList.remove('invalid');el.closest('.invalid')?.classList.remove('invalid');
+ const f=draft.fields;
+ if(el.dataset.f){if(el.type==='radio'&&!el.checked)return;f[el.dataset.f]=el.value;}
+ else if(el.name==='stage'){const n=Number(el.value);f.stage=n;if(n===1)f.caseType='PRE ESRD';else if(f.caseType==='PRE ESRD')f.caseType='';document.querySelectorAll('[name=caseType]').forEach(x=>x.checked=x.value===f.caseType);}
+ else if(el.name==='caseType')f.caseType=el.value;
+ else if(el.name?.startsWith('score-')){const id=Number(el.name.slice(6));draft.scores[id]=el.value==='na'?'na':Number(el.value);syncItem(id);if(el.value==='na')setTimeout(()=>$('reason-'+id).focus(),0);}
+ else if(el.dataset.reason)draft.reasons[el.dataset.reason]=el.value;
+ else if(el.id==='teacherOther'){f.teachers=[...f.teachers.filter(n=>TEACHERS.includes(n)),...splitNames(el.value)];$('f-teachers').classList.remove('invalid');}
+ else return;
+ saveDraft();refresh();
+ if(!$('errors').hidden)renderErrors(validate(),false);
+}
+document.addEventListener('input',onField);document.addEventListener('change',onField);
+document.addEventListener('click',e=>{
+ const t=e.target.closest('button,a');if(!t)return;
+ if(t.dataset.view){show(t.dataset.view);return;}
+ if(t.dataset.t){const f=draft.fields,n=t.dataset.t;f.teachers=f.teachers.includes(n)?f.teachers.filter(x=>x!==n):[...f.teachers,n];renderTeachers();$('f-teachers').classList.remove('invalid');saveDraft();if(!$('errors').hidden)renderErrors(validate(),false);return;}
+ if(t.dataset.jump){goTo('item-'+t.dataset.jump);return;}
+ if(t.dataset.go){e.preventDefault();goTo(t.dataset.go);return;}
+ if(t.dataset.clear){const id=Number(t.dataset.clear);delete draft.scores[id];document.querySelectorAll(`[name="score-${id}"]`).forEach(x=>x.checked=false);syncItem(id);saveDraft();refresh();return;}
+ if(t.dataset.open){openDetail(shownGroups[Number(t.dataset.open)].name);return;}
+ if(t.dataset.edit){loadForEdit(t.dataset.edit);return;}
+ if(t.dataset.pdf){const r=records.find(x=>x.id===t.dataset.pdf);if(r)downloadPdf(r);return;}
+ if(t.dataset.del){deleteRecord(t.dataset.del);return;}
+});
+['finishBtn','finishBtn2','finishBtn3'].forEach(id=>$(id).onclick=finish);
+$('clearBtn').onclick=async()=>{if(!draftHasContent()){startNext();return;}if(await ask('清空本次填寫？','學生姓名、評分與回饋會清除；評核老師與日期保留。已完成的紀錄不受影響。',[{label:'清空',value:true,cls:'danger'},{label:'取消',value:false}]))startNext();};
+$('leaveEdit').onclick=async()=>{if(isDirtyEdit()&&!await ask('修改尚未保存','剛才的修改還沒按「完成修改」。要放棄這些修改嗎？',[{label:'放棄修改',value:true,cls:'danger'},{label:'返回',value:false}]))return;startNext();};
+$('doneNext').onclick=()=>{$('doneDialog').close();startNext();};
+$('donePdf').onclick=()=>{if(lastDone)downloadPdf(lastDone);};
+$('doneEdit').onclick=()=>$('doneDialog').close();
+$('doneRecords').onclick=()=>{$('doneDialog').close();show('records');if(lastDone)openDetail(lastDone.student);};
+$('detailClose').onclick=()=>$('detailDialog').close();
+$('detailDialog').addEventListener('close',()=>{detailName='';});
+$('recSearch').oninput=renderRecords;
+$('exportBtn').onclick=exportExcel;
+$('importBtn').onclick=()=>{$('importFile').value='';$('importFile').click();};
+$('importFile').onchange=e=>{const f=e.target.files[0];if(f)importExcel(f);};
+$('wipeBtn').onclick=async()=>{
+ if(!records.length){toast('目前沒有紀錄');return;}
+ const u=unsyncedCount();
+ if(!await ask('清除此瀏覽器的全部紀錄？',`共 ${records.length} 筆會被刪除且無法復原（Google 母檔不受影響）。${u?`其中有 ${u} 筆變更尚未下載到 Excel。`:''}`,[{label:'確認清除',value:true,cls:'danger'},{label:'取消',value:false}]))return;
+ records=[];meta={lastExportAt:meta.lastExportAt,synced:{},deletedSinceExport:0,migrated:true,gsUrl:meta.gsUrl||'',gsOptOut:!!meta.gsOptOut,gsPending:{},gsLastSync:meta.gsLastSync||'',gsError:''};
+ try{persist();}catch{}
+ draft.editingId=null;saveDraftNow();refresh();updateCounts();renderData();$('importResult').innerHTML='';toast('已清除');
+};
+window.addEventListener('storage',e=>{if(e.key===KEY.records||e.key===KEY.meta){records=(loadJSON(KEY.records,[])||[]).map(cleanRecord).filter(Boolean);meta=Object.assign({lastExportAt:'',synced:{},deletedSinceExport:0,migrated:true,gsPending:{}},loadJSON(KEY.meta,{}));updateCounts();refresh();if(document.body.dataset.view==='records')renderRecords();if(document.body.dataset.view==='data')renderData();}});
+
+renderRubric();
+migrateOld();
+syncForm();
+updateCounts();
+try{initVoice();}catch(e){console.error(e);}
+$('gsCode').value=GS_SCRIPT;
+$('gsCopy').onclick=async()=>{try{await navigator.clipboard.writeText(GS_SCRIPT);toast('已複製程式碼');}catch{$('gsCode').select();toast('請按 Ctrl+C（Mac：⌘+C）複製');}};
+$('gsSave').onclick=gsConnect;
+$('gsRetry').onclick=()=>gsFlush().then(ok=>toast(ok?'已全部上傳':'仍無法連線，請稍後再試'));
+$('gsPull').onclick=async()=>{$('importResult').innerHTML='<div class="panel">正在讀取 Google 母檔…</div>';try{await gsPull('google');}catch(e){$('importResult').innerHTML=`<div class="hint-warn">無法讀取 Google 母檔：${esc(e.message)}</div>`;}};
+$('gsDisconnect').onclick=async()=>{const n=Object.keys(meta.gsPending).length;if(!await ask('取消連線 Google 母檔？',`此瀏覽器的紀錄與 Google 母檔都不會刪除，只是之後不再自動同步。${n?`目前有 ${n} 筆尚未上傳。`:''}`,[{label:'取消連線',value:true,cls:'danger'},{label:'返回',value:false}]))return;meta.gsUrl='';meta.gsPending={};meta.gsError='';meta.gsOptOut=true;saveMeta();$('gsUrl').value='';renderData();updateCounts();};
+window.addEventListener('online',()=>gsFlush());
+gsRender();
+async function autoSync(){
+ if(LINK_GS_URL&&LINK_GS_URL!==meta.gsUrl){meta.gsUrl='';meta.gsOptOut=false;}
+ const boot=LINK_GS_URL||DEFAULT_GS_URL;
+ if(!meta.gsUrl){
+  if(!boot||meta.gsOptOut)return;
+  meta.gsUrl=boot;meta.gsPending={};saveMeta();gsRender();
+  try{const res=await gsPull('silent'),remote=new Set(res.ids||[]);records.filter(r=>!remote.has(r.id)).forEach(r=>gsMark(r.id,'upsert'));saveMeta();}
+  catch(e){meta.gsError=e.message;saveMeta();records.forEach(r=>gsMark(r.id,'upsert'));}
+ }else{try{await gsPull('silent');}catch(e){meta.gsError=e.message;saveMeta();}}
+ await gsFlush();renderData();updateCounts();
+}
+autoSync();
+</script>
+</body>
+</html>
