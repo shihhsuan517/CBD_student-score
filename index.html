@@ -293,11 +293,10 @@ svg text{font:13px system-ui,sans-serif;fill:#617785}svg text.pt{fill:#216e64;fo
    <ol class="note" style="line-height:1.9;margin:10px 0">
     <li>開啟 Google 雲端硬碟中的「Pre-ESRD 案例報告評核母檔」。</li>
     <li>上方選單：<b>擴充功能 → Apps Script</b>。</li>
-    <li>刪除編輯器裡原有的內容，貼上下方程式碼。把第 3 行引號內改成<b>老師密碼</b>，按儲存（磁碟圖示）。</li>
+    <li>刪除編輯器裡原有的內容，貼上下方程式碼，按儲存（磁碟圖示）。</li>
     <li>右上角 <b>部署 → 新增部署作業</b> → 齒輪選「<b>網頁應用程式</b>」。執行身分：<b>我</b>；誰可以存取：<b>所有人</b> → 部署。</li>
     <li>依畫面授權。若出現「Google 尚未驗證這個應用程式」，按「進階」→「前往（不安全）」，這是你自己的程式，屬正常提示。</li>
     <li>複製「網頁應用程式」網址（結尾是 /exec），貼到上方欄位，按「連線」，再輸入老師密碼。</li>
-    <li><b>已部署過、只是更新程式</b>：貼上新程式並儲存後，改按「部署 → 管理部署作業 → 編輯（鉛筆）→ 版本：新版本 → 部署」，網址不會變。</li>
    </ol>
    <textarea id="gsCode" readonly style="font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;min-height:200px;white-space:pre"></textarea>
    <button id="gsCopy" type="button" style="margin-top:8px">複製程式碼</button>
@@ -560,7 +559,7 @@ function showDone(rec,mode){
  $('doneText').textContent=`已在「學生紀錄」中，${rec.student} 目前共 ${n} 筆評核。`;
  const sync=$('doneSync');sync.hidden=!meta.gsUrl;
  $('donePw').hidden=true;
- const showSync=ok=>{sync.style.color=ok?'var(--accent)':'#9b3d2e';const noPw=!meta.gsPw;$('donePw').hidden=ok||!noPw;sync.textContent=ok?'✓ 已加入 Google 雲端母檔':noPw?'⚠ 尚未寫入 Google 母檔：需要老師密碼。評核已保存在此瀏覽器。':'⚠ 暫時連不到 Google；已保存在此瀏覽器，恢復連線後會自動補傳。';};
+ const showSync=ok=>{sync.style.color=ok?'var(--accent)':'#9b3d2e';const noPw=!hasTeacherPw();$('donePw').hidden=ok||!noPw;sync.textContent=ok?'✓ 已加入 Google 雲端母檔':noPw?'⚠ 尚未寫入 Google 母檔：需要老師密碼。評核已保存在此瀏覽器。':'⚠ 暫時連不到 Google；已保存在此瀏覽器，恢復連線後會自動補傳。';};
  if(meta.gsUrl){sync.style.color='var(--muted)';sync.textContent='正在加入 Google 雲端母檔…';gsFlush().then(showSync);}
  $('donePw').onclick=async()=>{const ok=await gsLogin();showSync(!!ok);};
  $('doneDialog').showModal();
@@ -723,26 +722,22 @@ function mergeIncoming(list,bad,name,source){
 }
 
 /* ---------- Google 雲端母檔（Apps Script 網頁應用程式） ---------- */
-const GS_SCRIPT=`// 臨床案例報告評核：Google 母檔同步程式（貼在母檔的 擴充功能 → Apps Script）
-// ★ 請把下一行引號內改成「老師密碼」，只告訴老師。改完按儲存，再「部署 → 管理部署作業 → 編輯 → 版本：新版本 → 部署」。
-const TEACHER_PASSWORD = '請改成老師密碼';
+const GS_SCRIPT=`// Pre-ESRD 評核母檔同步程式（貼在母檔的 擴充功能 → Apps Script）
 const SHEET_NAME = '評核紀錄';
 
 function doGet(e) {
-  return json_({ ok: false, code: 'auth', error: '請從評核網頁輸入老師密碼後使用' });
+  const sh = getSheet_();
+  const rows = sh.getLastRow() ? sh.getDataRange().getDisplayValues() : [];
+  return json_({ ok: true, rows: rows });
 }
 
 function doPost(e) {
-  let req;
-  try { req = JSON.parse(e.postData.contents); } catch (err) { return json_({ ok: false, error: '資料格式錯誤' }); }
-  const denied = checkPassword_(req.pw);
-  if (denied) return json_(denied);
   const lock = LockService.getScriptLock();
   lock.waitLock(20000);
   try {
+    const req = JSON.parse(e.postData.contents);
     const sh = getSheet_();
     if (req.action === 'ping') return json_({ ok: true, count: Math.max(sh.getLastRow() - 1, 0) });
-    if (req.action === 'list') return json_({ ok: true, rows: sh.getLastRow() ? sh.getDataRange().getDisplayValues() : [] });
     let header = sh.getLastRow() ? sh.getRange(1, 1, 1, sh.getLastColumn()).getDisplayValues()[0] : [];
     if (!header.length || header[0] !== '評核識別碼') {
       if (sh.getLastRow() > 0) throw new Error('「評核紀錄」第一列不是本工具的欄位名稱');
@@ -757,7 +752,7 @@ function doPost(e) {
         const obj = {};
         req.header.forEach((h, i) => obj[h] = row[i]);
         const out = header.map(h => obj[h] === undefined || obj[h] === null ? '' : obj[h]);
-        const i = ids.indexOf(String(row[0]));
+        let i = ids.indexOf(String(row[0]));
         let at;
         if (i >= 0) { at = i + 2; updated++; } else { at = ids.length + 2; ids.push(String(row[0])); added++; }
         sh.getRange(at, 1, 1, out.length).setNumberFormat('@').setValues([out.map(v => String(v))]);
@@ -778,19 +773,6 @@ function doPost(e) {
   }
 }
 
-// 密碼檢查：錯誤 10 次後鎖定 10 分鐘
-function checkPassword_(pw) {
-  if (!TEACHER_PASSWORD || TEACHER_PASSWORD === '請改成老師密碼') return { ok: false, code: 'setup', error: '尚未在 Apps Script 設定老師密碼' };
-  const cache = CacheService.getScriptCache();
-  const fails = Number(cache.get('pwFails') || 0);
-  if (fails >= 10) return { ok: false, code: 'locked', error: '密碼錯誤次數過多，請 10 分鐘後再試' };
-  if (String(pw || '') !== TEACHER_PASSWORD) {
-    cache.put('pwFails', String(fails + 1), 600);
-    return { ok: false, code: 'auth', error: '老師密碼錯誤' };
-  }
-  return null;
-}
-
 function getSheet_() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   return ss.getSheetByName(SHEET_NAME) || ss.insertSheet(SHEET_NAME);
@@ -804,12 +786,12 @@ if(!meta.gsPending||typeof meta.gsPending!=='object')meta.gsPending={};
 const gsUrlOk=u=>/^https:\/\/script\.google(usercontent)?\.com\/\S+$/.test(u);
 const pendingCount=()=>meta.gsUrl?Object.keys(meta.gsPending).length:unsyncedCount();
 function gsMark(id,op){if(!meta.gsUrl)return;if(op)meta.gsPending[id]=op;else delete meta.gsPending[id];}
-async function gsCall(body,url=meta.gsUrl,pw=meta.gsPw){
+async function gsCall(body,url=meta.gsUrl){
  const ctl=new AbortController(),t=setTimeout(()=>ctl.abort(),30000);
  try{
-  const res=await fetch(url,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({...body,pw:pw||''}),redirect:'follow',signal:ctl.signal});
+  const res=body.action==='list'?await fetch(url,{redirect:'follow',signal:ctl.signal}):await fetch(url,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(body),redirect:'follow',signal:ctl.signal});
   let j;try{j=await res.json();}catch{throw Error('Google 回應的不是本工具的格式，請確認網址與部署設定（誰可以存取：所有人）');}
-  if(!j.ok){if(body.action==='list'&&/未知的動作/.test(j.error||''))j={error:'Apps Script 還是舊版，請更新程式碼並部署新版本',code:'old'};const err=Error(j.error||'Google 回應錯誤');err.code=j.code;throw err;}
+  if(!j.ok){const err=Error(j.error||'Google 回應錯誤');err.code=j.code;throw err;}
   return j;
  }catch(e){if(e.name==='AbortError')throw Error('連線逾時');if(e instanceof TypeError)throw Error('無法連到 Google（請確認網路，或部署時「誰可以存取」選了「所有人」）');throw e;}
  finally{clearTimeout(t);}
@@ -822,7 +804,7 @@ function gsFlush(){
   for(const [id,op] of Object.entries(meta.gsPending))if(op==='upsert'&&!records.some(r=>r.id===id))delete meta.gsPending[id];
   const ids=Object.keys(meta.gsPending);
   if(!ids.length){saveMeta();return true;}
-  if(!meta.gsPw){meta.gsError='需要輸入老師密碼';saveMeta();return false;}
+  if(!hasTeacherPw()){meta.gsError='需要輸入老師密碼';saveMeta();return false;}
   try{
    const up=records.filter(r=>meta.gsPending[r.id]==='upsert'),del=ids.filter(id=>meta.gsPending[id]==='delete');
    const sent=up.map(r=>[r.id,r.updatedAt]);
@@ -836,7 +818,7 @@ function gsFlush(){
  return gsBusy;
 }
 async function gsPull(source){
- if(!meta.gsPw){const e=Error('需要輸入老師密碼');e.code='auth';throw e;}
+ if(!hasTeacherPw()){const e=Error('需要輸入老師密碼');e.code='auth';throw e;}
  let j;try{j=await gsCall({action:'list'});}catch(e){if(e.code==='auth'){meta.gsPw='';saveMeta();}throw e;}
  const rows=(j.rows||[]).filter(r=>r.some(v=>String(v).trim()!==''));
  const {list,bad}=rows.length<=1?{list:[],bad:0}:parseRows(rows);
@@ -844,7 +826,7 @@ async function gsPull(source){
  res.ids=list.map(r=>r.id);return res;
 }
 function gsRender(){
- const on=!!meta.gsUrl,n=Object.keys(meta.gsPending||{}).length,noPw=on&&!meta.gsPw;
+ const on=!!meta.gsUrl,n=Object.keys(meta.gsPending||{}).length,noPw=on&&!hasTeacherPw();
  $('gsBadge').textContent=on?(noPw?'需要老師密碼':meta.gsError?'連線異常':'已連線'):'未連線';
  const bad=on&&(noPw||meta.gsError);
  $('gsBadge').style.background=on?(bad?'#fff0ed':'#e5f2ed'):'';$('gsBadge').style.color=on?(bad?'#9b3d2e':'#175951'):'';
@@ -854,7 +836,10 @@ function gsRender(){
   noPw?`此裝置尚未輸入老師密碼，評核只保存在此瀏覽器，不會寫入 Google 母檔。${n?`目前有 ${n} 筆等待上傳。`:''}`:
   (meta.gsError?`最近一次同步失敗：${meta.gsError}。資料已保存在此瀏覽器，恢復連線後會自動補傳。`:`每次完成評核會自動加入 Google 母檔。${meta.gsLastSync?'最近同步：'+new Date(meta.gsLastSync).toLocaleString('zh-TW',{hour12:false})+'。':''}`)+(n?` 目前有 ${n} 筆等待上傳。`:'');
 }
-/* 老師密碼：伺服器（Apps Script）驗證，正確才保存在此裝置 */
+/* 老師密碼：比對雜湊值（原始碼不含密碼本身），正確才保存在此裝置 */
+const TEACHER_PW_HASH='65b9a35da5d3b100749e1a2631b9762153518232e27fe1c36e7a009921a9cf2a';
+async function sha256(t){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(t));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('');}
+const hasTeacherPw=()=>meta.gsPw===TEACHER_PW_HASH;
 function askPassword(url=meta.gsUrl){
  return new Promise(resolve=>{
   const d=$('pwDialog'),input=$('pwInput'),msg=$('pwMsg'),ok=$('pwOk');
@@ -864,8 +849,10 @@ function askPassword(url=meta.gsUrl){
   $('pwForm').onsubmit=async e=>{
    e.preventDefault();const pw=input.value;if(!pw){msg.textContent='請輸入密碼';return;}
    ok.disabled=true;msg.style.color='var(--muted)';msg.textContent='驗證中…';
-   try{const j=await gsCall({action:'ping'},url,pw);finish({pw,count:j.count});}
-   catch(err){msg.style.color='#9b3d2e';msg.textContent=err.message||'驗證失敗';ok.disabled=false;input.select();}
+   let hash='';try{hash=await sha256(pw.trim());}catch{}
+   if(hash!==TEACHER_PW_HASH){msg.style.color='#9b3d2e';msg.textContent='老師密碼錯誤';ok.disabled=false;input.select();return;}
+   try{const j=await gsCall({action:'ping'},url);finish({pw:hash,count:j.count});}
+   catch(err){msg.style.color='#9b3d2e';msg.textContent='密碼正確，但連不到 Google：'+(err.message||'');ok.disabled=false;}
   };
   d.showModal();setTimeout(()=>input.focus(),50);
  });
@@ -1129,9 +1116,9 @@ async function autoSync(){
  if(!meta.gsUrl){
   if(!boot||meta.gsOptOut)return;
   meta.gsUrl=boot;meta.gsPending={};records.forEach(r=>gsMark(r.id,'upsert'));saveMeta();gsRender();updateCounts();
-  if(!meta.gsPw){await gsLogin();return;}
+  if(!hasTeacherPw()){await gsLogin();return;}
  }
- if(!meta.gsPw){gsRender();updateCounts();return;}
+ if(!hasTeacherPw()){gsRender();updateCounts();return;}
  try{await gsPull('silent');}catch(e){meta.gsError=e.message;saveMeta();}
  await gsFlush();renderData();updateCounts();
 }
