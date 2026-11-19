@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Pre-ESRD 案例報告評核</title>
+<title>臨床案例報告評核</title>
 <style>
 :root{--ink:#243446;--muted:#667685;--line:#dce3e9;--accent:#226c65;--soft:#e8f3f0;--bg:#f4f6f8;--warn:#b0592f;--warn-soft:#fff4ec}
 *{box-sizing:border-box}[hidden]{display:none!important}
@@ -137,7 +137,7 @@ svg text{font:13px system-ui,sans-serif;fill:#617785}svg text.pt{fill:#216e64;fo
 </head>
 <body data-view="assess">
 <header class="top">
- <div class="brand">Pre-ESRD 案例報告評核<small>臨床藥學教學 · PPCP × SNAPPS</small></div>
+ <div class="brand">臨床案例報告評核<small>初階：Pre-ESRD｜進階：AKI／ICU 查房</small></div>
  <nav class="tabs" role="tablist">
   <button class="tab" role="tab" data-view="assess" aria-selected="true">開始評核</button>
   <button class="tab" role="tab" data-view="records" aria-selected="false">學生紀錄<span class="count" id="recCount">0</span></button>
@@ -344,11 +344,11 @@ svg text{font:13px system-ui,sans-serif;fill:#617785}svg text.pt{fill:#216e64;fo
 <script>
 'use strict';
 /* ---------- 設定 ---------- */
-const RUBRIC=[{"id":1,"title":"病人背景與主觀資料","weight":10,"standards":["呈現就診原因、CKD病史與共病、症狀時間軸、過敏、遵從性及病人需求；未知項目標示待確認。","主要背景正確；經提示可補症狀時間軸、遵從性或需求。","重要病史／症狀遺漏或錯誤；將未詢問事項視為正常。"]},{"id":2,"title":"完整用藥與來源核對","weight":10,"standards":["逐項報告本院、他院及非處方用藥的藥名、劑量、頻次、適應症與來源；區分處方紀錄與實際服用。","主要藥物完整；經提示可補劑量、來源或實際服用狀態。","遺漏影響決策的藥物／劑量；把雲端處方當成確定服用。"]},{"id":3,"title":"客觀數據與變化趨勢","weight":10,"standards":["呈現必要檢驗及生命徵象的數值、單位、日期與趨勢；說明腎功能估算方法與用途，標出缺少資料。","主要數值正確；部分日期、單位、趨勢或估算說明需提示。","重要數據錯誤或遺漏；混用不同時點、將舊數據當成現況。"]},{"id":4,"title":"問題辨識與優先排序","weight":10,"standards":["提出2–3項優先問題及支持證據；依當下風險、證據與可行行動排序，區分確定DTP、潛在風險及待評估需求。","能辨識主要問題；排序理由或問題界定經追問後才清楚。","只羅列數據；漏掉主要用藥問題，或排序無理由。"]},{"id":5,"title":"病人特異性臨床推理","weight":15,"standards":["針對慢性腎臟病及多重共病進行整合評估，連結症狀、用藥、腎功能與時間序列；比較處置選項，說明支持／反對證據與仍需資料。","有針對慢性腎臟病患者特性進行評估；多重共病的整合或處置選項比較需提示才能完成。","只有結論；把相關性當因果，或判斷與個案證據不符。"]},{"id":6,"title":"證據運用與適用性","weight":10,"standards":["指出可追溯來源與關鍵建議；檢查腎功能指標、病人條件及證據限制，說明為何適用此個案。","來源及主要建議合理；適用條件或限制經追問才補足。","無可追溯依據、誤讀建議，或直接套用不適合此病人的證據。"]},{"id":7,"title":"照護計畫與追蹤","weight":15,"standards":["提出具體且必要時有條件的建議；交代執行對象、處置狀態、追蹤指標、時點及異常時下一步。","計畫方向合理；執行安排、時點或追蹤處置需提示補足。","計畫不可執行／有明顯安全問題；無追蹤，或把建議寫成已完成。"]},{"id":8,"title":"主動提問與回應追問","weight":10,"standards":["主動提出影響決策的具體不確定性及初步想法；回應追問時用證據說明，能修正原判斷。","能表達疑問與回應；需要提示才形成具體問題或修正理由。","僅問「怎麼處理」且無初步思考；忽略不確定性或無法回應。"]},{"id":9,"title":"延伸學習與回到照護","weight":5,"standards":["選定個案相關、可搜尋且能影響決策的學習題目；提出查找方向、回報時點及應用方式。","題目與個案相關；查找、回報或應用安排需提示。","未提出題目，或題目與此個案決策無關。"]},{"id":10,"title":"報告結構與專業表達","weight":5,"standards":["先完整呈現PPCP必要資料，再依SNAPPS聚焦；表達清楚、時限內完成，保護個資並區分事實／推論／建議。","結構可理解；偶有重複、跳接或超時，提示後能調整。","順序混亂影響理解；未完整呈現資料即下結論，或混淆事實與推論。"]}];
+const RUBRIC=[{"id":1,"title":"病人背景與主觀資料","weight":10,"standards":["呈現就診或入院原因、主要疾病病史與共病、症狀或病程時間軸、過敏、用藥經驗與遵從性及病人需求；未知項目標示待確認。","主要背景正確；經提示可補症狀或病程時間軸、用藥經驗與遵從性或需求。","重要病史／症狀遺漏或錯誤；將未詢問事項視為正常。"]},{"id":2,"title":"完整用藥與來源核對","weight":10,"standards":["逐項報告到院前用藥（本院、他院及非處方）與目前醫囑的藥名、劑量、途徑、頻次（或輸注速率）、適應症與來源；區分處方紀錄與實際使用。","主要藥物完整；經提示可補劑量、途徑、來源或實際使用狀態。","遺漏影響決策的藥物／劑量；把處方紀錄（如雲端處方、醫囑）當成實際使用。"]},{"id":3,"title":"客觀數據與變化趨勢","weight":10,"standards":["呈現必要檢驗、微生物培養與藥物濃度及生命徵象的數值、單位、日期與趨勢；說明與用藥決策相關的器官功能評估（如腎、肝功能）方法與用途，標出缺少資料。","主要數值正確；部分日期、單位、趨勢或器官功能評估說明需提示。","重要數據錯誤或遺漏；混用不同時點、將舊數據當成現況。"]},{"id":4,"title":"問題辨識與優先排序","weight":10,"standards":["提出2–3項優先問題及支持證據；依當下風險、證據與可行行動排序，區分確定DTP、潛在風險及待評估需求。","能辨識主要問題；排序理由或問題界定經追問後才清楚。","只羅列數據；漏掉主要用藥問題，或排序無理由。"]},{"id":5,"title":"病人特異性臨床推理","weight":15,"standards":["針對主要疾病及多重共病進行整合評估，連結症狀、用藥、器官功能與時間序列；比較處置選項，說明支持／反對證據與仍需資料。","有針對本個案主要疾病的特性進行評估；多重共病的整合或處置選項比較需提示才能完成。","只有結論；把相關性當因果，或判斷與個案證據不符。"]},{"id":6,"title":"證據運用與適用性","weight":10,"standards":["指出可追溯來源與關鍵建議；檢查病人條件（器官功能、族群特性、疾病嚴重度等）及證據限制，說明為何適用此個案。","來源及主要建議合理；適用條件或限制經追問才補足。","無可追溯依據、誤讀建議，或直接套用不適合此病人的證據。"]},{"id":7,"title":"照護計畫與追蹤","weight":15,"standards":["提出具體且必要時有條件的建議；交代執行對象、處置狀態、追蹤指標、時點及異常時下一步。","計畫方向合理；執行安排、時點或追蹤處置需提示補足。","計畫不可執行／有明顯安全問題；無追蹤，或把建議寫成已完成。"]},{"id":8,"title":"主動提問與回應追問","weight":10,"standards":["主動提出影響決策的具體不確定性及初步想法；回應追問時用證據說明，能修正原判斷。","能表達疑問與回應；需要提示才形成具體問題或修正理由。","僅問「怎麼處理」且無初步思考；忽略不確定性或無法回應。"]},{"id":9,"title":"延伸學習與回到照護","weight":5,"standards":["選定個案相關、可搜尋且能影響決策的學習題目；提出查找方向、回報時點及應用方式。","題目與個案相關；查找、回報或應用安排需提示。","未提出題目，或題目與此個案決策無關。"]},{"id":10,"title":"報告結構與專業表達","weight":5,"standards":["先完整呈現必要資料，再依指定報告架構聚焦（如先完整呈現 PPCP 必要資料，再依 SNAPPS 聚焦）；表達清楚、時限內完成，保護個資並區分事實／推論／建議。","結構可理解；偶有重複、跳接或超時，提示後能調整。","順序混亂影響理解；未完整呈現資料即下結論，或混淆事實與推論。"]}];
 const TEACHERS=['林子鈺','劉賢德','李承翰','鄭湜玄','黃致云'];
 const STAGE_SHORT={1:'第一次｜初階臨床',2:'第二次｜進階臨床-1',3:'第三次｜進階臨床-2'};
 const STAGE_EXCEL={1:'第一次｜初階臨床（PRE ESRD）',2:'第二次｜進階臨床-1（AKI或ICU查房）',3:'第三次｜進階臨床-2（AKI或ICU查房）'};
-const RUBRIC_VERSION='PPCP-SNAPPS-10-v1';
+const RUBRIC_VERSION='PPCP-SNAPPS-10-v2';
 const LEVEL_TITLE={2:'完整整合',1:'部分完成',0:'尚待加強'};
 const LEVEL_SUB={2:'2 級・獨立完成',1:'1 級・需提示補足',0:'0 級・未達要求'};
 // [欄位, 畫面標題, Excel 欄名]
@@ -654,7 +654,7 @@ function exportExcel(){
  const notes=[['項目','說明'],['評核紀錄','每次評核一列；修改會更新同一列，不會新增。'],['學生趨勢總覽','每位學生一列，各階段取最近一次已完成的評核。'],['總分','實際得分 ÷ 適用滿分 × 100；不適用項目排除。'],['級別','2＝獨立完成；1＝需提示補足；0＝未達要求'],['評核識別碼','系統用來辨識同一筆紀錄，請勿修改；匯入時相同識別碼不會重複。'],['使用方式','每次下載都是完整總檔，保留最新一份即可。']];
  const blob=xlsx([{name:'評核紀錄',rows},{name:'學生趨勢總覽',rows:summary},{name:'說明',rows:notes}]);
  const d=new Date(),url=URL.createObjectURL(blob),a=document.createElement('a');
- a.href=url;a.download=`Pre-ESRD_評核總檔_${today()}_${pad(d.getHours())}${pad(d.getMinutes())}.xlsx`;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),20000);
+ a.href=url;a.download=`臨床案例報告_評核總檔_${today()}_${pad(d.getHours())}${pad(d.getMinutes())}.xlsx`;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),20000);
  meta.lastExportAt=d.toISOString();meta.synced=Object.fromEntries(records.map(r=>[r.id,r.updatedAt]));meta.deletedSinceExport=0;saveMeta();
  renderData();updateCounts();toast(`已下載 Excel 總檔，共 ${records.length} 筆`);
 }
@@ -943,11 +943,11 @@ function downloadPdf(r){
   const font=(s,b)=>ctx.font=(b?'bold ':'')+s+'px "Noto Sans TC","Microsoft JhengHei","PingFang TC",sans-serif';
   const put=(t,x,top,s,b=false,color='#213444')=>{font(s,b);ctx.fillStyle=color;ctx.fillText(t,x,top);};
   const wrap=(str,s,b=false)=>{font(s,b);return String(str).split('\n').flatMap(part=>{const lines=[];let line='';for(const c of part){if(line&&ctx.measureText(line+c).width>max){lines.push(line);line=c;}else line+=c;}lines.push(line);return lines;});};
-  const room=h=>{if(y+h<=1684)return;savePage();bg();put('Pre-ESRD 案例報告回饋（續）',m,y,26,true);y+=48;};
+  const room=h=>{if(y+h<=1684)return;savePage();bg();put('臨床案例報告回饋（續）',m,y,26,true);y+=48;};
   const block=(s,size=24,line=34,b=false,color)=>{for(const l of wrap(s,size,b)){room(line);put(l,m,y,size,b,color);y+=line;}};
   bg();
   block('臨床藥學教學 ／ 學生回饋單',23,39,true,'#17665d');
-  block('Pre-ESRD 案例報告回饋',45,66,true);
+  block('臨床案例報告回饋',45,66,true);
   block(`學生：${r.student}　評核日期：${r.date}`,24,36);
   block(`評核老師：${r.teachers.join('、')||'—'}`,24,36);
   block(`階段：${r.stage?STAGE_SHORT[r.stage]:'待補'}｜${r.caseType||'—'}`,24,36);
@@ -964,7 +964,7 @@ function downloadPdf(r){
   for(const [k,t] of fb){room(72);block(t,24,34,true,'#17665d');block(k==='safety'&&r[k]==='有'?'有，需優先修正':r[k],24,34);y+=14;}
   savePage();
   const url=URL.createObjectURL(pdfBlob(pages)),a=document.createElement('a');
-  a.href=url;a.download='Pre-ESRD_學生回饋_'+r.student.replace(/[\\/:*?"<>|]/g,'_').slice(0,40)+'_'+r.date+'.pdf';
+  a.href=url;a.download='臨床案例報告_學生回饋_'+r.student.replace(/[\\/:*?"<>|]/g,'_').slice(0,40)+'_'+r.date+'.pdf';
   document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),60000);
   toast('已下載學生 PDF');
  }catch(e){console.error(e);toast('PDF 產生失敗，請改用 Chrome 再試');}
