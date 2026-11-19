@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pre-ESRD 案例報告評核</title>
+<style>
+:root{--ink:#243446;--muted:#667685;--line:#dce3e9;--accent:#226c65;--soft:#e8f3f0;--bg:#f4f6f8;--warn:#b0592f;--warn-soft:#fff4ec}
+*{box-sizing:border-box}[hidden]{display:none!important}
+body{margin:0;font-family:system-ui,-apple-system,"Noto Sans TC","Microsoft JhengHei",sans-serif;color:var(--ink);background:var(--bg);font-size:15px;line-height:1.6}
+.top{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:28px;padding:0 max(20px,calc((100vw - 1240px)/2));height:62px}
+.brand{font-weight:750;font-size:16px;white-space:nowrap;line-height:1.25}.brand small{display:block;font-size:11px;color:var(--muted);font-weight:500}
+.tabs{display:flex;height:100%}
+.tab{border:0;border-bottom:3px solid transparent;border-radius:0;background:none;padding:0 16px;height:100%;font-size:15px;color:var(--muted);min-height:0}
+.tab:hover{background:#f5f8f9}.tab[aria-selected=true]{color:var(--accent);border-bottom-color:var(--accent)}
+.count{font-size:12px;background:#edf1f4;border-radius:10px;padding:0 7px;margin-left:4px;color:var(--muted);font-weight:600}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#c8692c;margin-left:5px;vertical-align:middle}
+button{font:inherit;font-size:14px;font-weight:600;border:1px solid #c9d4dc;background:#fff;color:var(--ink);border-radius:8px;padding:9px 15px;cursor:pointer;min-height:40px}
+button:hover{background:#eef3f5}button:disabled{opacity:.45;cursor:default}
+button:focus-visible,a:focus-visible,input:focus-visible+.box{outline:3px solid #84c3bc;outline-offset:2px}
+.primary{background:var(--accent);border-color:var(--accent);color:#fff}.primary:hover{background:#18544f}
+.big{font-size:16px;padding:12px 24px;min-height:50px}.wide{width:100%}
+.linkish{border:0;background:none;color:var(--muted);text-decoration:underline;padding:4px 2px;min-height:0;font-weight:500;font-size:13px}.linkish:hover{background:none;color:var(--ink)}
+.danger{color:#9b3d2e;border-color:#e4bcb2}.danger:hover{background:#fff1ee}
+main{max-width:1240px;margin:auto;padding:26px 20px 70px}
+h1{font-size:25px;margin:0 0 4px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:12px;padding:24px;margin-bottom:20px}
+.panel>h2{font-size:19px;margin:0 0 16px;display:flex;align-items:center;gap:10px}
+.step{font-size:12px;background:var(--soft);color:var(--accent);padding:2px 9px;border-radius:5px}
+label{display:block;font-size:13px;font-weight:650}
+input,textarea{display:block;width:100%;font:inherit;font-size:15px;color:var(--ink);background:#fcfdfe;border:1px solid #ced8e0;border-radius:7px;padding:9px 11px;margin-top:5px}
+input:focus,textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px #226c651f}
+textarea{min-height:84px;resize:vertical;line-height:1.6}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.block{margin-bottom:18px}
+.field-title{font-size:13px;font-weight:650;margin-bottom:7px}
+.note{font-size:13px;color:var(--muted);margin:0}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{min-height:44px}.chip[aria-pressed=true]{background:var(--soft);border-color:var(--accent);color:#175951}.chip[aria-pressed=true]::before{content:'✓ '}
+.choices{display:grid;gap:8px}.inline-choices{display:flex;flex-wrap:wrap;gap:8px}
+.choice{display:flex;align-items:center;gap:10px;padding:11px 14px;border:1px solid var(--line);border-radius:9px;cursor:pointer;font-weight:500;font-size:15px;background:#fff}
+.choice:hover{border-color:#9bbab3}.choice:has(input:checked){background:var(--soft);border-color:var(--accent);font-weight:700}
+.choice input{width:18px;height:18px;margin:0;flex:none;accent-color:var(--accent)}
+details>summary{cursor:pointer;color:var(--accent);font-size:13px;font-weight:600}
+.invalid{border-color:var(--warn)!important;box-shadow:0 0 0 3px #b0592f2e!important}
+div.invalid,article.invalid{border-radius:9px;background:#fffaf6}
+.hint-warn{background:var(--warn-soft);border:1px solid #edcdb8;color:#7a3f22;border-radius:8px;padding:9px 13px;font-size:14px;margin:0 0 16px}
+.item-nav{position:sticky;top:62px;z-index:5;background:#fff;padding:10px 0;display:grid;grid-template-columns:repeat(10,1fr);gap:6px;border-bottom:1px solid var(--line)}
+.item-nav button{padding:4px 0;min-height:34px;font-size:13px}
+.item-nav .done{background:var(--soft);border-color:#8db5a9;color:var(--accent)}
+.item-nav .na{border-style:dashed;background:#f4f1e9;color:#7a7063}
+.item{padding:20px 4px;border-bottom:1px solid var(--line);scroll-margin-top:140px}.item:last-child{border-bottom:0}
+.item-head{display:flex;gap:10px;align-items:baseline;margin-bottom:10px}
+.item-head .no{font-size:12px;background:#edf1f4;padding:1px 6px;border-radius:4px;color:#4e6576}
+.item-head h3{margin:0;font-size:16px}.item-head .w{margin-left:auto;font-size:12px;color:var(--muted);white-space:nowrap}
+.levels{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.level{cursor:pointer;position:relative;font-weight:400}
+.level input{position:absolute;opacity:0;width:1px;height:1px}
+.box{display:block;height:100%;border:1px solid var(--line);border-radius:9px;padding:12px 13px;font-size:13px;color:#4e5d69;line-height:1.55;background:#fff}
+.level:hover .box{border-color:#7ca69e}
+.box b{display:flex;justify-content:space-between;gap:6px;color:var(--ink);font-size:14px}
+.box i{font-style:normal}.box em{font-style:normal;color:var(--accent);font-size:13px;white-space:nowrap}
+.box small{display:block;font-size:11px;color:var(--muted);margin-bottom:5px}
+.level input:checked+.box{background:var(--soft);border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.level input:checked+.box i::before{content:'✓ ';color:var(--accent)}
+.na-row{margin-top:10px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.na-row .box{padding:6px 13px;border-style:dashed}
+.na-row .level input:checked+.box{background:#f3f0e6;border-color:#8c7d58;box-shadow:none;color:#6c5b31;font-weight:700}
+.na-row .reason{flex:1;min-width:220px;margin:0}
+.fb-grid{display:grid;gap:16px}
+.voice{background:#f3f7f6;border:1px solid var(--line);border-radius:9px;padding:13px 15px;margin-bottom:18px}
+.voice .note{margin:8px 0}.voice textarea{min-height:90px}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.errors{background:var(--warn-soft);border:1px solid #e9c3ad;border-radius:9px;padding:12px 16px;margin-bottom:14px;color:#7a3f22;font-size:14px}
+.errors ul{margin:6px 0 0;padding-left:20px}.errors a{color:inherit}
+.draft-note{font-size:12px;color:var(--muted);margin:10px 0 0}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:22px;align-items:start}
+.layout>aside{position:sticky;top:82px}.score-card{border-top:4px solid var(--accent)}
+.score-label{font-size:13px;color:var(--muted);font-weight:600}
+.total{font-size:50px;font-weight:750;line-height:1.1;font-variant-numeric:tabular-nums}.total small{font-size:15px;color:var(--muted);font-weight:500}
+.bar{height:6px;background:#edf1f4;border-radius:4px;overflow:hidden;margin:12px 0 8px}.bar div{height:100%;background:var(--accent);width:0;transition:width .2s}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:12px 0 16px;font-size:12px;color:var(--muted)}
+.stats div{background:#f6f8fa;border-radius:6px;padding:6px 9px}.stats b{display:block;font-size:16px;color:var(--ink);font-variant-numeric:tabular-nums}
+.banner{background:#eef4fb;border:1px solid #bcd0e6;border-radius:10px;padding:12px 16px;margin-bottom:18px;display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.mobile-bar{display:none}
+dialog{border:1px solid var(--line);border-radius:14px;padding:26px;max-width:min(520px,94vw);color:var(--ink)}
+dialog::backdrop{background:#13233170}
+dialog h2{margin:0 0 8px;font-size:20px}
+.dialog-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+#doneDialog{text-align:center;width:460px}#doneDialog .dialog-actions{justify-content:center}
+.done-check{width:54px;height:54px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font-size:28px;margin:0 auto 12px}
+.done-who{font-weight:700;margin:0}.done-score{font-size:40px;font-weight:750;color:var(--accent);line-height:1.2;margin:6px 0}.done-score small{font-size:15px;color:var(--muted)}
+#doneDialog .primary.big{width:100%}
+#toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:#243446;color:#fff;border-radius:8px;padding:10px 20px;font-size:14px;z-index:50;max-width:92vw;display:none}
+.toolbar{display:flex;gap:16px;align-items:end;justify-content:space-between;flex-wrap:wrap;margin-bottom:18px}
+.toolbar label{width:280px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:16px}
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px}
+.card-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.card-head h3{margin:0;font-size:19px}.card-head strong{font-size:24px;color:var(--accent)}.card-head small{font-size:13px;color:var(--muted)}
+.card svg{width:100%;display:block;margin:4px 0}
+svg text{font:13px system-ui,sans-serif;fill:#617785}svg text.pt{fill:#216e64;font-weight:700}
+.stage-dates{display:grid;grid-template-columns:repeat(3,1fr);text-align:center;font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.4}
+.empty{background:#fff;border:1px dashed #c3cfd8;border-radius:12px;padding:44px 20px;text-align:center;color:var(--muted)}
+#detailDialog{width:880px;max-width:95vw;max-height:90vh}
+.dlg-head{display:flex;justify-content:space-between;align-items:center;gap:12px;position:sticky;top:-26px;background:#fff;padding:4px 0 10px;margin-top:-4px}
+.hist{border-top:1px solid var(--line);padding:16px 0}
+.hist h3{margin:0 0 2px;font-size:16px}
+.lv-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px 18px;font-size:13px;margin:10px 0}
+.fb h4{margin:10px 0 1px;font-size:13px;color:var(--accent)}.fb p{margin:0;white-space:pre-wrap;font-size:14px;overflow-wrap:anywhere}
+.tag-warn{background:var(--warn-soft);color:#8a4a24;border-radius:4px;padding:1px 6px;font-size:13px}
+.data-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}
+.stat{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px;font-size:13px;color:var(--muted)}
+.stat b{display:block;font-size:24px;color:var(--ink)}.stat b.small{font-size:16px;padding-top:6px}
+.actions-big{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:0 0 18px}
+.action{border:1px solid var(--line);border-radius:12px;padding:20px;background:#fff}
+.action h3{margin:0 0 4px;font-size:17px}.action p{margin:0 0 14px;font-size:13px;color:var(--muted)}
+.conflict{border:1px solid var(--line);border-radius:9px;padding:12px 14px;margin:10px 0}
+.conflict .inline-choices{margin-top:8px}.conflict .choice{font-size:14px;padding:8px 12px}
+.danger-zone{margin-top:30px}.danger-zone p{margin:8px 0}
+@media(max-width:900px){
+ .layout{display:block}.layout>aside{display:none}
+ body[data-view=assess] .mobile-bar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:15;background:#fff;border-top:1px solid var(--line);padding:10px 14px calc(10px + env(safe-area-inset-bottom));align-items:center;justify-content:space-between;gap:12px;box-shadow:0 -4px 16px #24344614}
+ .mobile-bar b{font-size:14px}.mobile-bar .note{font-size:12px}
+ body[data-view=assess] main{padding-bottom:110px}body[data-view=assess] #toast{bottom:92px}
+ .levels{grid-template-columns:1fr}
+ .top{gap:8px;padding:0 10px}.brand small{display:none}.brand{font-size:14px}.tab{padding:0 9px;font-size:14px}
+ .actions-big{grid-template-columns:1fr}
+}
+@media(max-width:560px){
+ .brand{display:none}.tabs{width:100%;justify-content:space-around}
+ .grid2{grid-template-columns:1fr}.panel{padding:18px}.item-nav{gap:4px}.item-nav button{font-size:12px;padding:0}
+ .data-stats{grid-template-columns:1fr 1fr}.lv-grid{grid-template-columns:1fr}.toolbar label{width:100%}
+ .cards{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body data-view="assess">
+<header class="top">
+ <div class="brand">Pre-ESRD 案例報告評核<small>臨床藥學教學 · PPCP × SNAPPS</small></div>
+ <nav class="tabs" role="tablist">
+  <button class="tab" role="tab" data-view="assess" aria-selected="true">開始評核</button>
+  <button class="tab" role="tab" data-view="records" aria-selected="false">學生紀錄<span class="count" id="recCount">0</span></button>
+  <button class="tab" role="tab" data-view="data" aria-selected="false">資料管理<span class="dot" id="unsyncDot" title="有紀錄尚未下載到 Excel" hidden></span></button>
+ </nav>
+</header>
+
+<main>
+<!-- ============ 開始評核 ============ -->
+<section id="view-assess">
+ <div id="editBanner" class="banner" hidden>
+  <div><b id="editTitle"></b><p class="note">修改後按「完成修改」，會更新這筆紀錄，不會新增。</p></div>
+  <button id="leaveEdit" type="button">改評下一位學生</button>
+ </div>
+ <div class="layout">
+  <div>
+   <section class="panel">
+    <h2><span class="step">1</span>基本資料</h2>
+    <div class="block" id="f-teachers">
+     <div class="field-title">評核老師（可複選）</div>
+     <div class="chips" id="teacherChips"></div>
+     <label style="margin-top:10px">其他老師<input id="teacherOther" placeholder="以頓號分隔，例如：王小明、陳小華"></label>
+    </div>
+    <div class="grid2 block">
+     <label>學生姓名<input id="f-student" data-f="student" list="studentList" autocomplete="off" placeholder="輸入姓名"></label>
+     <label>評核日期<input id="f-date" data-f="date" type="date"></label>
+    </div>
+    <datalist id="studentList"></datalist>
+    <div class="block" id="f-stage">
+     <div class="field-title">評核階段</div>
+     <div class="choices">
+      <label class="choice"><input type="radio" name="stage" value="1">第一次｜初階臨床（PRE ESRD）</label>
+      <label class="choice"><input type="radio" name="stage" value="2">第二次｜進階臨床-1（AKI 或 ICU 查房）</label>
+      <label class="choice"><input type="radio" name="stage" value="3">第三次｜進階臨床-2（AKI 或 ICU 查房）</label>
+     </div>
+    </div>
+    <div class="block" id="f-caseType" hidden>
+     <div class="field-title">案例類型</div>
+     <div class="inline-choices">
+      <label class="choice"><input type="radio" name="caseType" value="AKI">AKI</label>
+      <label class="choice"><input type="radio" name="caseType" value="ICU查房">ICU 查房</label>
+     </div>
+    </div>
+    <p id="dupHint" class="hint-warn" hidden></p>
+    <details>
+     <summary>選填：案例代碼、報告時間</summary>
+     <div class="grid2" style="margin-top:12px">
+      <label>案例代碼<input data-f="caseId" placeholder="去識別化代碼"></label>
+      <label>報告時間（分鐘）<input data-f="duration" type="number" min="0" max="999" placeholder="例如 20"></label>
+     </div>
+    </details>
+   </section>
+
+   <section class="panel">
+    <h2><span class="step">2</span>案例報告評分<span class="note" id="progressText" style="margin-left:auto"></span></h2>
+    <p class="note" style="margin-bottom:6px">點選最符合學生表現的卡片。資料不足以評時，選「本次不適用」並寫原因。</p>
+    <nav class="item-nav" id="itemNav" aria-label="跳至評分項目"></nav>
+    <div id="rubric"></div>
+   </section>
+
+   <section class="panel">
+    <h2><span class="step">3</span>教師回饋</h2>
+    <details class="voice">
+     <summary>用語音輸入回饋（選用）</summary>
+     <p class="note">依序說「優點是…、改善是…、下一步是…」，再按「整理到下方欄位」。語音可能由瀏覽器服務處理，請勿口述病人或學生個資。</p>
+     <div class="row"><button type="button" id="voiceStart">開始語音輸入</button><button type="button" id="voiceStop" disabled>停止</button><span id="voiceStatus" class="note" role="status"></span></div>
+     <label style="margin-top:10px">逐字稿（可修改）<textarea data-f="voice" placeholder="優點：…&#10;改善：…&#10;下一步：…"></textarea></label>
+     <button type="button" id="voiceOrganize" style="margin-top:8px">整理到下方欄位</button>
+    </details>
+    <div class="fb-grid">
+     <label>表現優點<textarea data-f="strength" placeholder="具體行為與支持證據"></textarea></label>
+     <label>優先改善事項<textarea data-f="improve" placeholder="最需要改善的一至兩項行為"></textarea></label>
+     <label>學生下一步<textarea data-f="next" placeholder="做什麼、何時完成、如何追蹤"></textarea></label>
+     <label>教師追問與提示<textarea data-f="prompt" placeholder="一般澄清不算提示；指出遺漏或引導答案時，記錄原句"></textarea></label>
+     <div id="f-safety">
+      <div class="field-title">病人安全問題</div>
+      <div class="inline-choices">
+       <label class="choice"><input type="radio" name="safety" data-f="safety" value="無">無</label>
+       <label class="choice"><input type="radio" name="safety" data-f="safety" value="有">有，需優先修正</label>
+      </div>
+     </div>
+     <label id="safetyNoteWrap" hidden>安全事件與修正安排<textarea id="f-safetyNote" data-f="safetyNote" placeholder="具體事實與修正安排"></textarea></label>
+    </div>
+   </section>
+
+   <section class="panel" id="finishPanel">
+    <div id="errors" class="errors" role="alert" hidden></div>
+    <div class="row">
+     <button id="finishBtn" type="button" class="primary big">完成本次評核</button>
+     <button id="clearBtn" type="button" class="linkish">清空重填</button>
+    </div>
+    <p class="draft-note" id="draftNote">填寫中的內容會自動保留在此瀏覽器。</p>
+   </section>
+  </div>
+
+  <aside>
+   <section class="panel score-card">
+    <div class="score-label">目前總分</div>
+    <div class="total"><span id="total">—</span><small> ／100</small></div>
+    <div class="bar"><div id="bar"></div></div>
+    <p class="note" id="totalHint">還有 10 項未評</p>
+    <div class="stats">
+     <div>累積得分<b id="earned">0</b></div>
+     <div>適用滿分<b id="possible">100</b></div>
+     <div>不適用<b id="naCount">0 項</b></div>
+     <div>尚未評分<b id="pendingCount">10 項</b></div>
+    </div>
+    <button id="finishBtn2" type="button" class="primary wide">完成本次評核</button>
+   </section>
+  </aside>
+ </div>
+ <div class="mobile-bar">
+  <div><b id="mProgress">已評 0／10</b><p class="note" id="mScore">完成後換算總分</p></div>
+  <button id="finishBtn3" type="button" class="primary">完成本次評核</button>
+ </div>
+</section>
+
+<!-- ============ 學生紀錄 ============ -->
+<section id="view-records" hidden>
+ <div class="toolbar">
+  <div><h1>學生紀錄</h1><p class="note" id="recSummary"></p></div>
+  <label>搜尋學生<input id="recSearch" placeholder="輸入姓名"></label>
+ </div>
+ <div id="recCards" class="cards"></div>
+</section>
+
+<!-- ============ 資料管理 ============ -->
+<section id="view-data" hidden>
+ <h1>資料管理</h1>
+ <p class="note">完成評核會保存在<b>此瀏覽器</b>；連線 Google 雲端母檔後，也會自動加入雲端。下載 Excel 是額外的離線備份。</p>
+ <div class="data-stats">
+  <div class="stat">學生<b id="dStudents">0</b></div>
+  <div class="stat">評核紀錄<b id="dRecords">0</b></div>
+  <div class="stat">上次下載 Excel<b id="dLast" class="small">尚未下載</b></div>
+ </div>
+ <p id="dUnsync" class="hint-warn" hidden></p>
+ <section class="panel" id="gsPanel">
+  <h2 style="font-size:17px;margin:0 0 4px">Google 雲端母檔<span id="gsBadge" class="count" style="margin-left:6px">未連線</span></h2>
+  <p class="note" id="gsStatus"></p>
+  <div class="row" style="margin-top:12px" id="gsSetup">
+   <input id="gsUrl" placeholder="貼上網頁應用程式網址：https://script.google.com/macros/s/…/exec" style="flex:1;min-width:260px;margin:0" autocomplete="off">
+   <button id="gsSave" class="primary" type="button">連線</button>
+  </div>
+  <div class="row" style="margin-top:12px" id="gsActions" hidden>
+   <button id="gsPull" type="button">從 Google 母檔載入其他老師的紀錄</button>
+   <button id="gsRetry" type="button" hidden>重新上傳未同步的紀錄</button>
+   <button id="gsDisconnect" type="button" class="linkish">取消連線</button>
+  </div>
+  <details style="margin-top:14px" id="gsHelp">
+   <summary>第一次設定步驟（約 3 分鐘，只需做一次）</summary>
+   <ol class="note" style="line-height:1.9;margin:10px 0">
+    <li>開啟 Google 雲端硬碟中的「Pre-ESRD 案例報告評核母檔」。</li>
+    <li>上方選單：<b>擴充功能 → Apps Script</b>。</li>
+    <li>刪除編輯器裡原有的內容，貼上下方程式碼，按儲存（磁碟圖示）。</li>
+    <li>右上角 <b>部署 → 新增部署作業</b> → 齒輪選「<b>網頁應用程式</b>」。執行身分：<b>我</b>；誰可以存取：<b>所有人</b> → 部署。</li>
+    <li>依畫面授權。若出現「Google 尚未驗證這個應用程式」，按「進階」→「前往（不安全）」，這是你自己的程式，屬正常提示。</li>
+    <li>複製「網頁應用程式」網址（結尾是 /exec），貼到上方欄位，按「連線」。</li>
+   </ol>
+   <textarea id="gsCode" readonly style="font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;min-height:200px;white-space:pre"></textarea>
+   <button id="gsC
