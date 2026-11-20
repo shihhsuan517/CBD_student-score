@@ -842,13 +842,13 @@ function gsRender(){
   (meta.gsError?`最近一次同步失敗：${meta.gsError}。資料已保存在此瀏覽器，恢復連線後會自動補傳。`:`每次完成評核會自動加入 Google 母檔。${meta.gsLastSync?'最近同步：'+new Date(meta.gsLastSync).toLocaleString('zh-TW',{hour12:false})+'。':''}`)+(n?` 目前有 ${n} 筆等待上傳。`:'');
 }
 /* 老師密碼：比對雜湊值（原始碼不含密碼本身），正確才保存在此裝置 */
-const TEACHER_PW_HASH='65b9a35da5d3b100749e1a2631b9762153518232e27fe1c36e7a009921a9cf2a';
+const TEACHER_PW_HASHES=['65b9a35da5d3b100749e1a2631b9762153518232e27fe1c36e7a009921a9cf2a','3acfabc5b458c7aacc5570d7159d72209ff96460baf8b3ca53b8d3c073e21d88'];
 async function sha256(t){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(t));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('');}
-const hasTeacherPw=()=>meta.gsPw===TEACHER_PW_HASH;
+const hasTeacherPw=()=>TEACHER_PW_HASHES.includes(meta.gsPw);
 const loggedIn=()=>!!meta.gsUrl&&hasTeacherPw();
 /* Google 母檔網址以老師密碼加密（PBKDF2 + AES-GCM），沒有密碼無法從原始碼取得 */
-const GS_URL_ENC={"salt": "ASRwCBurmSajO6yU+fiNew==", "iv": "Jnyg3UaKXCpyfBx2", "ct": "lWn5ua9ddlLZbDn3BLilYtlHhbTQTtOph4NbuHIRi6tnS6hRN7+pBy/qfVNKbqiH0X+EiVt0qbA7JPm21tf6AJ1tlpnQOgGe/ecO27DWjZDVlULeFVu9DTc1RCLoZY7oVBHeweiZ9YbDZd73tElkSedoet/0RwDMK4N/7M0g9vg="};
-async function decryptGsUrl(pw){
+const GS_URL_ENCS=[{"salt": "ASRwCBurmSajO6yU+fiNew==", "iv": "Jnyg3UaKXCpyfBx2", "ct": "lWn5ua9ddlLZbDn3BLilYtlHhbTQTtOph4NbuHIRi6tnS6hRN7+pBy/qfVNKbqiH0X+EiVt0qbA7JPm21tf6AJ1tlpnQOgGe/ecO27DWjZDVlULeFVu9DTc1RCLoZY7oVBHeweiZ9YbDZd73tElkSedoet/0RwDMK4N/7M0g9vg="},{"salt": "cfnGi8QY+8RZM9rtStta2A==", "iv": "LmfY3WgeZWtJ2dT8", "ct": "04qLo+nTAGnRrb9gfvw072KIEuZr/wUgSEVbje/ebwr/mPMa77zsSM+16JDb86hBYLPzpvoEdC3UsAHKkiH9M89cLomS3VodtjIbFdvrgDoGqzn1fak5JZHwiIc8lpqDXWLeHpzxIQ+XmtGL7v2WvzTpX/WVHdhj4rnfkrn+M4o="}];
+async function decryptGsUrl(pw,GS_URL_ENC){
  const b=x=>Uint8Array.from(atob(x),c=>c.charCodeAt(0)),te=new TextEncoder();
  const base=await crypto.subtle.importKey('raw',te.encode(pw),'PBKDF2',false,['deriveKey']);
  const key=await crypto.subtle.deriveKey({name:'PBKDF2',salt:b(GS_URL_ENC.salt),iterations:200000,hash:'SHA-256'},base,{name:'AES-GCM',length:256},false,['decrypt']);
@@ -864,8 +864,8 @@ function askPassword(url=meta.gsUrl){
    e.preventDefault();const pw=input.value;if(!pw){msg.textContent='請輸入密碼';return;}
    ok.disabled=true;msg.style.color='var(--muted)';msg.textContent='驗證中…';
    let hash='';try{hash=await sha256(pw.trim());}catch{}
-   if(hash!==TEACHER_PW_HASH){msg.style.color='#9b3d2e';msg.textContent='老師密碼錯誤';ok.disabled=false;input.select();return;}
-   let u=url;if(!u){try{u=await decryptGsUrl(pw.trim());}catch{msg.style.color='#9b3d2e';msg.textContent='無法取得母檔位置，請通知管理者';ok.disabled=false;return;}}
+   const k=TEACHER_PW_HASHES.indexOf(hash);if(k<0){msg.style.color='#9b3d2e';msg.textContent='老師密碼錯誤';ok.disabled=false;input.select();return;}
+   let u=url;if(!u){try{u=await decryptGsUrl(pw.trim(),GS_URL_ENCS[k]);}catch{msg.style.color='#9b3d2e';msg.textContent='無法取得母檔位置，請通知管理者';ok.disabled=false;return;}}
    try{const j=await gsCall({action:'ping'},u);finish({pw:hash,url:u,count:j.count});}
    catch(err){msg.style.color='#9b3d2e';msg.textContent='密碼正確，但連不到 Google：'+(err.message||'');ok.disabled=false;}
   };
