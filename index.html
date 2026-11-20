@@ -11,6 +11,7 @@ body{margin:0;font-family:system-ui,-apple-system,"Noto Sans TC","Microsoft Jhen
 .top{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:28px;padding:0 max(20px,calc((100vw - 1240px)/2));height:62px}
 .brand{font-weight:750;font-size:16px;white-space:nowrap;line-height:1.25}.brand small{display:block;font-size:11px;color:var(--muted);font-weight:500}
 .tabs{display:flex;height:100%}
+.login-btn{margin-left:auto;min-height:36px;padding:6px 14px;font-size:13px;white-space:nowrap}.login-btn.on{background:var(--soft);border-color:#8db5a9;color:#175951}
 .tab{border:0;border-bottom:3px solid transparent;border-radius:0;background:none;padding:0 16px;height:100%;font-size:15px;color:var(--muted);min-height:0}
 .tab:hover{background:#f5f8f9}.tab[aria-selected=true]{color:var(--accent);border-bottom-color:var(--accent)}
 .count{font-size:12px;background:#edf1f4;border-radius:10px;padding:0 7px;margin-left:4px;color:var(--muted);font-weight:600}
@@ -128,7 +129,7 @@ svg text{font:13px system-ui,sans-serif;fill:#617785}svg text.pt{fill:#216e64;fo
  .actions-big{grid-template-columns:1fr}
 }
 @media(max-width:560px){
- .brand{display:none}.tabs{width:100%;justify-content:space-around}
+ .brand{display:none}.tabs{flex:1;justify-content:space-around}.tab{padding:0 6px;font-size:13px}.login-btn{padding:4px 8px;font-size:12px;min-height:32px}
  .grid2{grid-template-columns:1fr}.panel{padding:18px}.item-nav{gap:4px}.item-nav button{font-size:12px;padding:0}
  .data-stats{grid-template-columns:1fr 1fr}.lv-grid{grid-template-columns:1fr}.toolbar label{width:100%}
  .cards{grid-template-columns:1fr}
@@ -143,6 +144,7 @@ svg text{font:13px system-ui,sans-serif;fill:#617785}svg text.pt{fill:#216e64;fo
   <button class="tab" role="tab" data-view="records" aria-selected="false">學生紀錄<span class="count" id="recCount">0</span></button>
   <button class="tab" role="tab" data-view="data" aria-selected="false">資料管理<span class="dot" id="unsyncDot" title="有紀錄尚未下載到 Excel" hidden></span></button>
  </nav>
+ <button id="loginBtn" type="button" class="login-btn">老師登入</button>
 </header>
 
 <main>
@@ -278,18 +280,21 @@ svg text{font:13px system-ui,sans-serif;fill:#617785}svg text.pt{fill:#216e64;fo
   <h2 style="font-size:17px;margin:0 0 4px">Google 雲端母檔<span id="gsBadge" class="count" style="margin-left:6px">未連線</span></h2>
   <p class="note" id="gsStatus"></p>
   <div class="row" style="margin-top:12px" id="gsSetup">
-   <input id="gsUrl" placeholder="貼上網頁應用程式網址：https://script.google.com/macros/s/…/exec" style="flex:1;min-width:260px;margin:0" autocomplete="off">
-   <button id="gsSave" class="primary" type="button">連線</button>
+   <button id="gsLoginMain" class="primary" type="button">老師登入（輸入老師密碼）</button>
   </div>
   <div class="row" style="margin-top:12px" id="gsActions" hidden>
    <button id="gsPull" type="button">從 Google 母檔載入其他老師的紀錄</button>
    <button id="gsRetry" type="button" hidden>重新上傳未同步的紀錄</button>
    <button id="gsPwBtn" type="button" class="primary" hidden>輸入老師密碼</button>
    <button id="gsLogout" type="button" hidden>登出此裝置</button>
-   <button id="gsDisconnect" type="button" class="linkish">取消連線</button>
+   <button id="gsDisconnect" type="button" class="linkish" hidden>取消連線</button>
   </div>
   <details style="margin-top:14px" id="gsHelp">
-   <summary>Apps Script 程式碼與設定步驟</summary>
+   <summary>管理者用：Apps Script 程式碼與手動連線</summary>
+   <div class="row" style="margin-top:10px">
+    <input id="gsUrl" placeholder="網頁應用程式網址：https://script.google.com/macros/s/…/exec" style="flex:1;min-width:260px;margin:0" autocomplete="off">
+    <button id="gsSave" type="button">手動連線</button>
+   </div>
    <ol class="note" style="line-height:1.9;margin:10px 0">
     <li>開啟 Google 雲端硬碟中的「Pre-ESRD 案例報告評核母檔」。</li>
     <li>上方選單：<b>擴充功能 → Apps Script</b>。</li>
@@ -332,7 +337,7 @@ svg text{font:13px system-ui,sans-serif;fill:#617785}svg text.pt{fill:#216e64;fo
  <div class="done-score"><span id="doneScore"></span><small> ／100</small></div>
  <p id="doneText" class="note"></p>
  <p id="doneSync" class="note" style="font-weight:600" hidden></p>
- <button id="donePw" type="button" class="primary" hidden>輸入老師密碼並上傳</button>
+ <button id="donePw" type="button" class="primary" hidden>老師登入並寫入母檔</button>
  <div class="dialog-actions">
   <button id="doneNext" type="button" class="primary big">評下一位學生</button>
   <button id="donePdf" type="button">下載學生 PDF</button>
@@ -557,10 +562,10 @@ function showDone(rec,mode){
  $('doneWho').textContent=`${rec.student}｜${STAGE_SHORT[rec.stage]}${rec.stage>1?'（'+rec.caseType+'）':''}｜${rec.date}`;
  $('doneScore').textContent=fmt(calc(rec.scores).total);
  $('doneText').textContent=`已在「學生紀錄」中，${rec.student} 目前共 ${n} 筆評核。`;
- const sync=$('doneSync');sync.hidden=!meta.gsUrl;
+ const sync=$('doneSync');sync.hidden=false;
  $('donePw').hidden=true;
- const showSync=ok=>{sync.style.color=ok?'var(--accent)':'#9b3d2e';const noPw=!hasTeacherPw();$('donePw').hidden=ok||!noPw;sync.textContent=ok?'✓ 已加入 Google 雲端母檔':noPw?'⚠ 尚未寫入 Google 母檔：需要老師密碼。評核已保存在此瀏覽器。':'⚠ 暫時連不到 Google；已保存在此瀏覽器，恢復連線後會自動補傳。';};
- if(meta.gsUrl){sync.style.color='var(--muted)';sync.textContent='正在加入 Google 雲端母檔…';gsFlush().then(showSync);}
+ const showSync=ok=>{sync.style.color=ok?'var(--accent)':'#9b3d2e';const noPw=!hasTeacherPw();$('donePw').hidden=ok||!noPw;sync.textContent=ok?'✓ 已加入 Google 雲端母檔':noPw?'⚠ 尚未寫入 Google 母檔：老師尚未登入。評核已保存在此瀏覽器。':'⚠ 暫時連不到 Google；已保存在此瀏覽器，恢復連線後會自動補傳。';};
+ if(loggedIn()){sync.style.color='var(--muted)';sync.textContent='正在加入 Google 雲端母檔…';gsFlush().then(showSync);}else showSync(false);
  $('donePw').onclick=async()=>{const ok=await gsLogin();showSync(!!ok);};
  $('doneDialog').showModal();
 }
@@ -784,8 +789,8 @@ function json_(o) {
 `;
 if(!meta.gsPending||typeof meta.gsPending!=='object')meta.gsPending={};
 const gsUrlOk=u=>/^https:\/\/script\.google(usercontent)?\.com\/\S+$/.test(u);
-const pendingCount=()=>meta.gsUrl?Object.keys(meta.gsPending).length:unsyncedCount();
-function gsMark(id,op){if(!meta.gsUrl)return;if(op)meta.gsPending[id]=op;else delete meta.gsPending[id];}
+const pendingCount=()=>loggedIn()?Object.keys(meta.gsPending).length:unsyncedCount();
+function gsMark(id,op){if(op)meta.gsPending[id]=op;else delete meta.gsPending[id];}
 async function gsCall(body,url=meta.gsUrl){
  const ctl=new AbortController(),t=setTimeout(()=>ctl.abort(),30000);
  try{
@@ -826,20 +831,29 @@ async function gsPull(source){
  res.ids=list.map(r=>r.id);return res;
 }
 function gsRender(){
- const on=!!meta.gsUrl,n=Object.keys(meta.gsPending||{}).length,noPw=on&&!hasTeacherPw();
- $('gsBadge').textContent=on?(noPw?'需要老師密碼':meta.gsError?'連線異常':'已連線'):'未連線';
- const bad=on&&(noPw||meta.gsError);
+ const on=loggedIn(),n=Object.keys(meta.gsPending||{}).length,noPw=!on;
+ $('gsBadge').textContent=on?(meta.gsError?'連線異常':'已連線'):'未登入';
+ const bad=on&&meta.gsError;
  $('gsBadge').style.background=on?(bad?'#fff0ed':'#e5f2ed'):'';$('gsBadge').style.color=on?(bad?'#9b3d2e':'#175951'):'';
- $('gsSetup').hidden=on;$('gsActions').hidden=!on;if(!on&&DEFAULT_GS_URL&&!$('gsUrl').value)$('gsUrl').value=DEFAULT_GS_URL;
- $('gsRetry').hidden=!n||noPw;$('gsPwBtn').hidden=!noPw;$('gsLogout').hidden=!on||noPw;$('gsPull').hidden=noPw;
- $('gsStatus').textContent=!on?'設定後，每次完成評核都會自動加入 Google 試算表，不需要再下載或合併檔案。':
-  noPw?`此裝置尚未輸入老師密碼，評核只保存在此瀏覽器，不會寫入 Google 母檔。${n?`目前有 ${n} 筆等待上傳。`:''}`:
+ $('gsSetup').hidden=on;$('gsActions').hidden=!on;
+ $('gsRetry').hidden=!n||noPw;$('gsPwBtn').hidden=true;$('gsLogout').hidden=!on;$('gsPull').hidden=noPw;
+ const lb=$('loginBtn');lb.textContent=on?'✓ 老師已登入':'老師登入';lb.classList.toggle('on',on);
+ $('gsStatus').textContent=noPw?`老師登入後，每次完成評核會自動寫入 Google 母檔。未登入時，評核只保存在此瀏覽器。${n&&records.length?`此瀏覽器有 ${Math.min(n,records.length)} 筆尚未寫入母檔，登入後會自動上傳。`:''}`:
   (meta.gsError?`最近一次同步失敗：${meta.gsError}。資料已保存在此瀏覽器，恢復連線後會自動補傳。`:`每次完成評核會自動加入 Google 母檔。${meta.gsLastSync?'最近同步：'+new Date(meta.gsLastSync).toLocaleString('zh-TW',{hour12:false})+'。':''}`)+(n?` 目前有 ${n} 筆等待上傳。`:'');
 }
 /* 老師密碼：比對雜湊值（原始碼不含密碼本身），正確才保存在此裝置 */
 const TEACHER_PW_HASH='65b9a35da5d3b100749e1a2631b9762153518232e27fe1c36e7a009921a9cf2a';
 async function sha256(t){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(t));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('');}
 const hasTeacherPw=()=>meta.gsPw===TEACHER_PW_HASH;
+const loggedIn=()=>!!meta.gsUrl&&hasTeacherPw();
+/* Google 母檔網址以老師密碼加密（PBKDF2 + AES-GCM），沒有密碼無法從原始碼取得 */
+const GS_URL_ENC={"salt": "ASRwCBurmSajO6yU+fiNew==", "iv": "Jnyg3UaKXCpyfBx2", "ct": "lWn5ua9ddlLZbDn3BLilYtlHhbTQTtOph4NbuHIRi6tnS6hRN7+pBy/qfVNKbqiH0X+EiVt0qbA7JPm21tf6AJ1tlpnQOgGe/ecO27DWjZDVlULeFVu9DTc1RCLoZY7oVBHeweiZ9YbDZd73tElkSedoet/0RwDMK4N/7M0g9vg="};
+async function decryptGsUrl(pw){
+ const b=x=>Uint8Array.from(atob(x),c=>c.charCodeAt(0)),te=new TextEncoder();
+ const base=await crypto.subtle.importKey('raw',te.encode(pw),'PBKDF2',false,['deriveKey']);
+ const key=await crypto.subtle.deriveKey({name:'PBKDF2',salt:b(GS_URL_ENC.salt),iterations:200000,hash:'SHA-256'},base,{name:'AES-GCM',length:256},false,['decrypt']);
+ return new TextDecoder().decode(await crypto.subtle.decrypt({name:'AES-GCM',iv:b(GS_URL_ENC.iv)},key,b(GS_URL_ENC.ct)));
+}
 function askPassword(url=meta.gsUrl){
  return new Promise(resolve=>{
   const d=$('pwDialog'),input=$('pwInput'),msg=$('pwMsg'),ok=$('pwOk');
@@ -851,7 +865,8 @@ function askPassword(url=meta.gsUrl){
    ok.disabled=true;msg.style.color='var(--muted)';msg.textContent='驗證中…';
    let hash='';try{hash=await sha256(pw.trim());}catch{}
    if(hash!==TEACHER_PW_HASH){msg.style.color='#9b3d2e';msg.textContent='老師密碼錯誤';ok.disabled=false;input.select();return;}
-   try{const j=await gsCall({action:'ping'},url);finish({pw:hash,count:j.count});}
+   let u=url;if(!u){try{u=await decryptGsUrl(pw.trim());}catch{msg.style.color='#9b3d2e';msg.textContent='無法取得母檔位置，請通知管理者';ok.disabled=false;return;}}
+   try{const j=await gsCall({action:'ping'},u);finish({pw:hash,url:u,count:j.count});}
    catch(err){msg.style.color='#9b3d2e';msg.textContent='密碼正確，但連不到 Google：'+(err.message||'');ok.disabled=false;}
   };
   d.showModal();setTimeout(()=>input.focus(),50);
@@ -859,7 +874,7 @@ function askPassword(url=meta.gsUrl){
 }
 async function gsLogin(){
  const r=await askPassword();if(!r)return false;
- meta.gsPw=r.pw;meta.gsError='';saveMeta();gsRender();
+ meta.gsUrl=r.url;meta.gsPw=r.pw;meta.gsError='';meta.gsOptOut=false;saveMeta();gsRender();
  try{const res=await gsPull('silent'),remote=new Set(res.ids||[]);records.filter(x=>!remote.has(x.id)).forEach(x=>gsMark(x.id,'upsert'));saveMeta();}catch(e){meta.gsError=e.message;saveMeta();}
  const ok=await gsFlush();renderData();updateCounts();
  toast(ok?'已登入，紀錄已同步到 Google 母檔':'已登入；部分紀錄稍後補傳');return ok;
@@ -1104,21 +1119,17 @@ $('gsCode').value=GS_SCRIPT;
 $('gsCopy').onclick=async()=>{try{await navigator.clipboard.writeText(GS_SCRIPT);toast('已複製程式碼');}catch{$('gsCode').select();toast('請按 Ctrl+C（Mac：⌘+C）複製');}};
 $('gsSave').onclick=gsConnect;
 $('gsPwBtn').onclick=()=>gsLogin();
-$('gsLogout').onclick=async()=>{if(!await ask('登出此裝置？','這台裝置會清除老師密碼。之後完成的評核只會保存在此瀏覽器，要再輸入密碼才會寫入 Google 母檔。',[{label:'登出',value:true,cls:'danger'},{label:'返回',value:false}]))return;meta.gsPw='';saveMeta();renderData();updateCounts();toast('已登出');};
+$('gsLogout').onclick=async()=>{if(!await ask('登出此裝置？','這台裝置會清除老師登入。之後完成的評核只保存在此瀏覽器，老師再次登入後才會寫入 Google 母檔。',[{label:'登出',value:true,cls:'danger'},{label:'返回',value:false}]))return;meta.gsPw='';meta.gsUrl='';meta.gsError='';saveMeta();renderData();updateCounts();toast('已登出');};
+$('gsLoginMain').onclick=()=>gsLogin();
+$('loginBtn').onclick=()=>{if(loggedIn())show('data');else gsLogin();};
 $('gsRetry').onclick=()=>gsFlush().then(ok=>toast(ok?'已全部上傳':'仍無法連線，請稍後再試'));
 $('gsPull').onclick=async()=>{$('importResult').innerHTML='<div class="panel">正在讀取 Google 母檔…</div>';try{await gsPull('google');}catch(e){$('importResult').innerHTML=`<div class="hint-warn">無法讀取 Google 母檔：${esc(e.message)}</div>`;}};
 $('gsDisconnect').onclick=async()=>{const n=Object.keys(meta.gsPending).length;if(!await ask('取消連線 Google 母檔？',`此瀏覽器的紀錄與 Google 母檔都不會刪除，只是之後不再自動同步。${n?`目前有 ${n} 筆尚未上傳。`:''}`,[{label:'取消連線',value:true,cls:'danger'},{label:'返回',value:false}]))return;meta.gsUrl='';meta.gsPw='';meta.gsPending={};meta.gsError='';meta.gsOptOut=true;saveMeta();$('gsUrl').value='';renderData();updateCounts();};
 window.addEventListener('online',()=>gsFlush());
 gsRender();
 async function autoSync(){
- if(LINK_GS_URL&&LINK_GS_URL!==meta.gsUrl){meta.gsUrl='';meta.gsPw='';meta.gsOptOut=false;}
- const boot=LINK_GS_URL||DEFAULT_GS_URL;
- if(!meta.gsUrl){
-  if(!boot||meta.gsOptOut)return;
-  meta.gsUrl=boot;meta.gsPending={};records.forEach(r=>gsMark(r.id,'upsert'));saveMeta();gsRender();updateCounts();
-  if(!hasTeacherPw()){await gsLogin();return;}
- }
- if(!hasTeacherPw()){gsRender();updateCounts();return;}
+ if(LINK_GS_URL&&!loggedIn()){records.forEach(r=>gsMark(r.id,'upsert'));saveMeta();await gsLogin();return;}
+ if(!loggedIn()){gsRender();updateCounts();return;}
  try{await gsPull('silent');}catch(e){meta.gsError=e.message;saveMeta();}
  await gsFlush();renderData();updateCounts();
 }
